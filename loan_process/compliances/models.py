@@ -1,3 +1,5 @@
+from time import timezone
+
 from django.db import models
 from users.models import CustomUser
 from loanapplications.models import LoanApplication
@@ -22,6 +24,14 @@ class ComplianceCheck(models.Model):
         ('failed', 'Failed'),
         ('pending', 'Pending'),
     ]
+
+    user = models.ForeignKey(
+        CustomUser,
+        on_delete=models.CASCADE,
+        related_name='initiated_checks',
+        help_text="The user who initiated this compliance check.",
+        default=None
+    )
 
     loan_application = models.ForeignKey(
         LoanApplication,
@@ -61,7 +71,13 @@ class ComplianceCheck(models.Model):
         blank=True,
         help_text="The timestamp when the compliance check was reviewed."
     )
-
+    is_compliant = models.BooleanField(default=False,
+                                       help_text="Indicates whether the compliance check passed all requirements.")
+    checked_on = models.DateTimeField(
+        auto_now=True,
+        help_text="The timestamp when the compliance check was last updated.",
+        null=True
+    )
     class Meta:
         ordering = ['-created_at']
         verbose_name = 'Compliance Check'

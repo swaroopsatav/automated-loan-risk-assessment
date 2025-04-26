@@ -125,6 +125,8 @@ class UserProfileView(generics.RetrieveUpdateAPIView):
 
 
 # --- Admin/User Detail View by ID ---
+from rest_framework.exceptions import NotFound
+
 class AdminUserDetailView(generics.RetrieveAPIView):
     """
     Allows admin to fetch details of a specific user by ID.
@@ -137,10 +139,7 @@ class AdminUserDetailView(generics.RetrieveAPIView):
         try:
             return super().get_object()
         except Exception:
-            return Response(
-                {"error": "User not found"},
-                status=status.HTTP_404_NOT_FOUND
-            )
+            raise NotFound(detail="User not found.")
 
 
 # --- List Users (optional for admin) ---

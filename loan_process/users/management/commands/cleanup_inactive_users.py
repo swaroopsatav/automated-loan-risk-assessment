@@ -24,6 +24,9 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         months = options['months']
+        if months <= 0:
+            raise ValueError("Months must be a positive integer")
+
         delete = options['delete']
         dry_run = options.get('dry-run', False)
         cutoff_date = now() - timedelta(days=30 * months)
@@ -41,7 +44,7 @@ class Command(BaseCommand):
             return
 
         if dry_run:
-            self.stdout.write(f"Would {'delete' if delete else 'deactivate'} {count} users")
+            self.stdout.write(f"Would {('delete' if delete else 'deactivate')} {count} user(s)")
             return
 
         try:
@@ -72,3 +75,5 @@ class Command(BaseCommand):
                 self.style.ERROR(f"❌ Error during cleanup: {str(e)}")
             )
             raise
+
+
