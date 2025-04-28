@@ -4,13 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3109a877-066b-4d3c-ac92-9e8a24b67d04" name="Changes" comment="28/04/2025,11:48 AM">
+    <list default="true" id="3109a877-066b-4d3c-ac92-9e8a24b67d04" name="Changes" comment="28/04/2025,11:59 AM">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loan_process/frontend/src/loans/LoanDetail.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/frontend/src/loans/LoanDetail.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loan_process/frontend/src/loans/LoanDocumentUpload.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/frontend/src/loans/LoanDocumentUpload.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loan_process/frontend/src/loans/LoanSubmitForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/frontend/src/loans/LoanSubmitForm.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loan_process/frontend/src/loans/MyLoanList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/frontend/src/loans/MyLoanList.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loan_process/frontend/src/loans/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/frontend/src/loans/api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loan_process/frontend/src/compliance/ComplianceAuditTrail.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/frontend/src/compliance/ComplianceAuditTrail.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loan_process/frontend/src/compliance/ComplianceCheckUpdate.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/frontend/src/compliance/ComplianceCheckUpdate.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loan_process/frontend/src/compliance/LoanComplianceChecks.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/frontend/src/compliance/LoanComplianceChecks.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loan_process/frontend/src/compliance/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/frontend/src/compliance/api.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -145,7 +144,7 @@
       <workItem from="1745732562875" duration="9165000" />
       <workItem from="1745741859471" duration="21418000" />
       <workItem from="1745813989524" duration="124000" />
-      <workItem from="1745814114706" duration="7588000" />
+      <workItem from="1745814114706" duration="7991000" />
     </task>
     <task id="LOCAL-00001" summary="26/04/2025,6:33 PM">
       <option name="closed" value="true" />
@@ -227,7 +226,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745821133000</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="28/04/2025,11:59 AM">
+      <option name="closed" value="true" />
+      <created>1745821766311</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1745821766311</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -247,6 +254,7 @@
     <MESSAGE value="28/04/2025,11:29 AM" />
     <MESSAGE value="28/04/2025,11:41 AM" />
     <MESSAGE value="28/04/2025,11:48 AM" />
-    <option name="LAST_COMMIT_MESSAGE" value="28/04/2025,11:48 AM" />
+    <MESSAGE value="28/04/2025,11:59 AM" />
+    <option name="LAST_COMMIT_MESSAGE" value="28/04/2025,11:59 AM" />
   </component>
 </project>
