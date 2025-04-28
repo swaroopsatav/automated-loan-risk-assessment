@@ -5,12 +5,32 @@ import integrationsAPI from './api';
 const MockExperianViewer = () => {
   const { loanId } = useParams();
   const [report, setReport] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    integrationsAPI.get(`mock/experian/${loanId}/`).then(res => setReport(res.data));
+    const fetchReport = async () => {
+      try {
+        const res = await integrationsAPI.get(`mock/experian/${loanId}/`);
+        setReport(res.data);
+      } catch (err) {
+        console.error('Failed to fetch report:', err);
+        setError('Failed to load the report. Please try again later.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchReport();
   }, [loanId]);
 
-  if (!report) return <p>Loading...</p>;
+  if (loading) {
+    return <div className="p-4 max-w-3xl mx-auto">Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="p-4 max-w-3xl mx-auto text-red-500">{error}</div>;
+  }
 
   return (
     <div className="p-4 bg-white max-w-3xl mx-auto rounded shadow">

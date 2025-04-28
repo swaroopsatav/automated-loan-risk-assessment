@@ -4,15 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3109a877-066b-4d3c-ac92-9e8a24b67d04" name="Changes" comment="28/04/2025,10:39 AM">
+    <list default="true" id="3109a877-066b-4d3c-ac92-9e8a24b67d04" name="Changes" comment="28/04/2025,11:15 AM">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loan_process/frontend/src/users/LoginForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/frontend/src/users/LoginForm.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loan_process/frontend/src/users/Navbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/frontend/src/users/Navbar.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loan_process/frontend/src/users/PrivateRoute.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/frontend/src/users/PrivateRoute.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loan_process/frontend/src/users/Profile.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/frontend/src/users/Profile.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loan_process/frontend/src/users/RegisterForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/frontend/src/users/RegisterForm.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loan_process/frontend/src/users/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/frontend/src/users/api.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loan_process/frontend/src/users/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/frontend/src/users/auth.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loan_process/frontend/src/integrations/AdminMockExperianList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/frontend/src/integrations/AdminMockExperianList.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loan_process/frontend/src/integrations/MockExperianViewer.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/frontend/src/integrations/MockExperianViewer.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loan_process/frontend/src/integrations/MockKYCViewer.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/frontend/src/integrations/MockKYCViewer.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loan_process/frontend/src/integrations/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/frontend/src/integrations/api.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -147,7 +144,7 @@
       <workItem from="1745732562875" duration="9165000" />
       <workItem from="1745741859471" duration="21418000" />
       <workItem from="1745813989524" duration="124000" />
-      <workItem from="1745814114706" duration="4970000" />
+      <workItem from="1745814114706" duration="5836000" />
     </task>
     <task id="LOCAL-00001" summary="26/04/2025,6:33 PM">
       <option name="closed" value="true" />
@@ -197,7 +194,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745817008904</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="28/04/2025,11:15 AM">
+      <option name="closed" value="true" />
+      <created>1745819130603</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1745819130603</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -213,6 +218,7 @@
     <MESSAGE value="26/04/2025,9:55 PM" />
     <MESSAGE value="27/04/2025,1:32 PM" />
     <MESSAGE value="28/04/2025,10:39 AM" />
-    <option name="LAST_COMMIT_MESSAGE" value="28/04/2025,10:39 AM" />
+    <MESSAGE value="28/04/2025,11:15 AM" />
+    <option name="LAST_COMMIT_MESSAGE" value="28/04/2025,11:15 AM" />
   </component>
 </project>
