@@ -3,10 +3,32 @@ import riskAPI from './api';
 
 const ModelPerformanceLog = () => {
   const [logs, setLogs] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    riskAPI.get('risk/models/').then(res => setLogs(res.data));
+    const fetchLogs = async () => {
+      try {
+        const response = await riskAPI.get('risk/models/');
+        setLogs(response.data);
+      } catch (err) {
+        console.error('Error fetching model performance logs:', err);
+        setError('Failed to load model performance logs. Please try again.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchLogs();
   }, []);
+
+  if (loading) {
+    return <p className="p-4 text-center">Loading...</p>;
+  }
+
+  if (error) {
+    return <p className="p-4 text-red-500 text-center">{error}</p>;
+  }
 
   return (
     <div className="p-4 max-w-5xl mx-auto">
@@ -14,11 +36,16 @@ const ModelPerformanceLog = () => {
       <table className="w-full table-auto text-sm border">
         <thead className="bg-gray-100">
           <tr>
-            <th>Model</th><th>Accuracy</th><th>Precision</th><th>Recall</th><th>AUC</th><th>Date</th>
+            <th>Model</th>
+            <th>Accuracy</th>
+            <th>Precision</th>
+            <th>Recall</th>
+            <th>AUC</th>
+            <th>Date</th>
           </tr>
         </thead>
         <tbody>
-          {logs.map(log => (
+          {logs.map((log) => (
             <tr key={log.id} className="text-center border-t">
               <td>{log.model_version}</td>
               <td>{log.accuracy}</td>
