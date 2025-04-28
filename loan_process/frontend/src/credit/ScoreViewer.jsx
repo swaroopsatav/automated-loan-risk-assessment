@@ -5,17 +5,32 @@ import scoreAPI from './scoreApi';
 const ScoreViewer = () => {
   const { loan_id } = useParams();
   const [score, setScore] = useState(null);
-    score.scoring_output = undefined;
-    score.scoring_inputs = undefined;
-    score.decision = undefined;
-    score.risk_score = undefined;
-    score.loan_id = undefined;
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    scoreAPI.get(`score/loan/${loan_id}/`).then(res => setScore(res.data));
+    const fetchScore = async () => {
+      try {
+        const response = await scoreAPI.get(`score/loan/${loan_id}/`);
+        setScore(response.data);
+      } catch (err) {
+        console.error('Failed to fetch score:', err);
+        setError('Unable to load credit score. Please try again later.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchScore();
   }, [loan_id]);
 
-  if (!score) return <p className="p-4">Loading...</p>;
+  if (loading) {
+    return <p className="p-4 text-center">Loading...</p>;
+  }
+
+  if (error) {
+    return <p className="p-4 text-red-500 text-center">{error}</p>;
+  }
 
   return (
     <div className="max-w-xl mx-auto bg-white shadow p-4 rounded">
@@ -24,9 +39,13 @@ const ScoreViewer = () => {
       <p><strong>Decision:</strong> {score.decision}</p>
       <p><strong>Model:</strong> {score.model_name}</p>
       <h4 className="mt-4 font-medium">Inputs</h4>
-      <pre className="bg-gray-100 p-2 rounded text-sm">{JSON.stringify(score.scoring_inputs, null, 2)}</pre>
+      <pre className="bg-gray-100 p-2 rounded text-sm overflow-x-auto">
+        {score.scoring_inputs ? JSON.stringify(score.scoring_inputs, null, 2) : 'No inputs available'}
+      </pre>
       <h4 className="mt-2 font-medium">Output / Explanation</h4>
-      <pre className="bg-gray-100 p-2 rounded text-sm">{JSON.stringify(score.scoring_output, null, 2)}</pre>
+      <pre className="bg-gray-100 p-2 rounded text-sm overflow-x-auto">
+        {score.scoring_output ? JSON.stringify(score.scoring_output, null, 2) : 'No output available'}
+      </pre>
     </div>
   );
 };
