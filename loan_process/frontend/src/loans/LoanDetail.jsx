@@ -17,7 +17,7 @@ const LoanDetail = () => {
           ...response.data,
           documents: response.data.documents || [],
           ml_scoring_output: response.data.ml_scoring_output || {},
-          ai_decision: response.data.ai_decision || 'N/A',
+          ai_decision: response.data.ai_decision || 'Pending Review',
           risk_score: response.data.risk_score ?? 'N/A',
         };
         setLoan(cleanLoan);
@@ -41,7 +41,11 @@ const LoanDetail = () => {
   }, [id]);
 
   if (loading) {
-    return <p className="p-4 text-center">Loading loan details...</p>; // Optionally, add a spinner here
+    return (
+      <div className="flex justify-center items-center py-8">
+        <div className="spinner-border animate-spin inline-block w-8 h-8 border-4 border-solid border-blue-600 rounded-full"></div>
+      </div>
+    ); // Spinner added for loading state
   }
 
   if (error) {
