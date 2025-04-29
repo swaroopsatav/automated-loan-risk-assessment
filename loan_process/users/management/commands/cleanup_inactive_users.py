@@ -3,6 +3,9 @@ from django.utils.timezone import now
 from users.models import CustomUser
 from datetime import timedelta
 from django.db import transaction
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class Command(BaseCommand):
@@ -25,6 +28,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         months = options['months']
         if months <= 0:
+            logger.error("Invalid months argument provided.")
             raise ValueError("Months must be a positive integer")
 
         delete = options['delete']
@@ -53,6 +57,7 @@ class Command(BaseCommand):
                     # Log usernames or emails of deleted users for auditing
                     deleted_users = list(inactive_users.values_list('username', flat=True))
                     inactive_users.delete()
+                    logger.info(f"{count} users deleted: {', '.join(deleted_users)}")
                     self.stdout.write(self.style.SUCCESS(
                         f"✅ {count} user(s) permanently deleted for inactivity > {months} month(s)."
                     ))
@@ -60,6 +65,7 @@ class Command(BaseCommand):
                 else:
                     # Bulk update for deactivation
                     inactive_users.update(is_active=False)
+                    logger.info(f"{count} users deactivated")
                     self.stdout.write(self.style.SUCCESS(
                         f"✅ {count} user(s) deactivated for inactivity > {months} month(s)."
                     ))
@@ -71,9 +77,8 @@ class Command(BaseCommand):
                 ))
 
         except Exception as e:
+            logger.error(f"Error during cleanup: {str(e)}")
             self.stdout.write(
                 self.style.ERROR(f"❌ Error during cleanup: {str(e)}")
             )
             raise
-
-

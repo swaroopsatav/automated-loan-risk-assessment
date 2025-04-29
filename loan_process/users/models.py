@@ -1,27 +1,29 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from django.core.validators import RegexValidator, MinLengthValidator, MaxLengthValidator
+from django.core.validators import MinValueValidator, MaxValueValidator, RegexValidator
 from django.utils.timezone import now
-from django.conf import settings
 import os
+import logging
 
-# Validator for phone number
-phone_regex = RegexValidator(
-    regex=r'^\d{10}$',
-    message="Phone number must be exactly 10 digits."
-)
+logger = logging.getLogger(__name__)
 
 
-# Function to define upload path for user documents
 def user_document_upload_path(instance, filename):
-    # Get file extension while handling case sensitivity
-    ext = os.path.splitext(filename)[1].lower()
-    # Generate unique filename using timestamp
+    """
+    Constructs a file path for uploading user documents.
+    Files are stored in the 'kyc_documents' directory inside directories named after the user's ID.
+    """
+    _, ext = os.path.splitext(filename)
     new_filename = f"{now().strftime('%Y%m%d_%H%M%S')}{ext}"
     return os.path.join('kyc_documents', f'user_{instance.id}', new_filename)
 
 
 class CustomUser(AbstractUser):
+    """
+    Custom user model extending Django's AbstractUser.
+    Includes additional fields for financial profile, KYC verification, and Experian API integration.
+    """
+
     # --- Basic Profile Info ---
     username = models.CharField(max_length=100, unique=True)
     email = models.EmailField(unique=True)
@@ -29,8 +31,13 @@ class CustomUser(AbstractUser):
         max_length=10,
         blank=True,
         null=True,
-        validators=[phone_regex],
-        help_text="Enter 10 digit phone number without any spaces or special characters"
+        validators=[
+            RegexValidator(
+                regex=r'^\d{10}$',
+                message="Phone number must be exactly 10 digits."
+            )
+        ],
+        help_text="Enter a 10-digit phone number without any spaces or special characters"
     )
     date_of_birth = models.DateField(blank=True, null=True)
     address = models.TextField(blank=True, null=True)
@@ -57,7 +64,10 @@ class CustomUser(AbstractUser):
     credit_score = models.IntegerField(
         blank=True,
         null=True,
-        validators=[MinLengthValidator(300), MaxLengthValidator(900)]
+        validators=[
+            MinValueValidator(300, "Credit score must be at least 300."),
+            MaxValueValidator(900, "Credit score cannot exceed 900.")
+        ]
     )
     credit_history_fetched = models.BooleanField(default=False)
 
@@ -79,8 +89,8 @@ class CustomUser(AbstractUser):
         blank=True,
         null=True,
         validators=[
-            MinLengthValidator(6, "Government ID number must be at least 6 characters."),
-            MaxLengthValidator(100, "Government ID number cannot exceed 100 characters.")
+            MinValueValidator(6, "Government ID number must be at least 6 characters."),
+            MaxValueValidator(100, "Government ID number cannot exceed 100 characters.")
         ]
     )
 
@@ -125,6 +135,14 @@ class CustomUser(AbstractUser):
         return f"{self.username} ({self.email})"
 
     def save(self, *args, **kwargs):
-        if self.is_kyc_verified and not self.kyc_verified_on:
-            self.kyc_verified_on = now()
-        super().save(*args, **kwargs)
+        """
+        Override the save method to handle additional logic, such as setting
+        the KYC verified timestamp if the user is marked as verified.
+        """
+        try:
+            if self.is_kyc_verified and not self.kyc_verified_on:
+                self.kyc_verified_on = now()
+            super().save(*args, **kwargs)
+        except Exception as e:
+            logger.error(f"Error saving user {self.username}: {e}")
+            raise

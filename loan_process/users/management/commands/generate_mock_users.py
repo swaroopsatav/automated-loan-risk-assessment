@@ -3,7 +3,9 @@ from faker import Faker
 import random
 from django.utils.timezone import now
 from users.models import CustomUser
+import logging
 
+logger = logging.getLogger(__name__)
 faker = Faker()
 
 
@@ -27,8 +29,11 @@ class Command(BaseCommand):
             for _ in range(current_batch_size):
                 try:
                     user_data = self._generate_user_data()
-                    batch.append(CustomUser(**user_data))
+                    user = CustomUser(**user_data)
+                    user.set_password(user_data['password'])
+                    batch.append(user)
                 except Exception as e:
+                    logger.warning(f"Skipping user due to error: {str(e)}")
                     self.stdout.write(self.style.WARNING(f"⚠️ Skipping user due to error: {str(e)}"))
                     total_errors += 1
                     continue
@@ -37,8 +42,10 @@ class Command(BaseCommand):
                 try:
                     created_users = CustomUser.objects.bulk_create(batch, ignore_conflicts=True)
                     created += len(created_users)
+                    logger.info(f"Created {len(created_users)} users in batch")
                     self.stdout.write(f"✅ {created}/{count} users created...")
                 except Exception as e:
+                    logger.error(f"Error during batch creation: {str(e)}")
                     self.stdout.write(self.style.ERROR(f"❌ Error during batch creation: {str(e)}"))
                     total_errors += len(batch)
                     continue
@@ -46,6 +53,7 @@ class Command(BaseCommand):
         summary = f"\n✅ Process completed:\n"
         summary += f"- Successfully created: {created} users\n"
         summary += f"- Failed attempts: {total_errors}\n"
+        logger.info(summary)
         self.stdout.write(self.style.SUCCESS(summary))
 
     def _generate_user_data(self):

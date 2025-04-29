@@ -4,14 +4,22 @@ from django.contrib.auth.admin import UserAdmin
 from django.utils.timezone import now
 from .models import CustomUser
 from .forms import CustomUserCreationForm, CustomUserChangeForm
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 @admin.action(description="Mark selected users as KYC Verified")
 def mark_kyc_verified(modeladmin, request, queryset):
-    queryset.update(
+    """
+    Admin action to mark selected users as KYC Verified.
+    """
+    updated_count = queryset.update(
         is_kyc_verified=True,
         kyc_verified_on=now()
     )
+    logger.info(f"KYC Verified updated for {updated_count} user(s).")
+    modeladmin.message_user(request, f"Successfully marked {updated_count} user(s) as KYC Verified.")
 
 
 @admin.register(CustomUser)
@@ -90,29 +98,45 @@ class CustomUserAdmin(UserAdmin):
     )
 
     def preview_id_proof(self, obj):
+        """
+        Generate a preview link for the ID proof file.
+        """
         return self._preview_file(obj.id_proof, 'ID Proof')
 
     preview_id_proof.short_description = "View ID Proof"
 
     def preview_address_proof(self, obj):
+        """
+        Generate a preview link for the address proof file.
+        """
         return self._preview_file(obj.address_proof, 'Address Proof')
 
     preview_address_proof.short_description = "View Address Proof"
 
     def preview_income_proof(self, obj):
+        """
+        Generate a preview link for the income proof file.
+        """
         return self._preview_file(obj.income_proof, 'Income Proof')
 
     preview_income_proof.short_description = "View Income Proof"
 
     def _preview_file(self, file_field, label):
+        """
+        Helper method to generate a download link for uploaded files.
+        """
         if not file_field:
             return format_html('<span style="color: red;">{}</span>', "Not Uploaded")
 
-        if hasattr(file_field, 'url') and file_field.url:
-            return format_html(
-                '<a href="{}" target="_blank" class="button" style="display:inline-block; padding:5px 10px; '
-                'background:#79aec8; color:white; border-radius:3px; text-decoration:none;">'
-                '<i class="fas fa-download"></i> Download {}</a>',
-                file_field.url, label
-            )
+        try:
+            if hasattr(file_field, 'url') and file_field.url:
+                return format_html(
+                    '<a href="{}" target="_blank" class="button" style="display:inline-block; padding:5px 10px; '
+                    'background:#79aec8; color:white; border-radius:3px; text-decoration:none;">'
+                    '<i class="fas fa-download"></i> Download {}</a>',
+                    file_field.url, label
+                )
+        except Exception as e:
+            logger.error(f"Error generating preview link for {label}: {e}")
+
         return format_html('<span style="color: red;">{}</span>', "Invalid File")
