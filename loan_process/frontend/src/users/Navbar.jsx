@@ -6,29 +6,35 @@ const Navbar = () => {
     const navigate = useNavigate();
     const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('access'));
 
-    // Update the login state when the access token changes
+    // Listen for login/logout across tabs and same tab
     useEffect(() => {
-        const handleStorageChange = () => {
+        const syncLoginState = () => {
             setIsLoggedIn(!!localStorage.getItem('access'));
         };
 
-        window.addEventListener('storage', handleStorageChange);
+        // Custom event for same-tab updates
+        window.addEventListener('loginStateChanged', syncLoginState);
+
+        // Native storage event for cross-tab updates
+        window.addEventListener('storage', syncLoginState);
+
         return () => {
-            window.removeEventListener('storage', handleStorageChange);
+            window.removeEventListener('loginStateChanged', syncLoginState);
+            window.removeEventListener('storage', syncLoginState);
         };
     }, []);
 
-    // Handle user logout
     const handleLogout = () => {
         const confirmLogout = window.confirm('Are you sure you want to log out?');
         if (confirmLogout) {
             try {
-                logoutUser(); // Clear tokens
-                setIsLoggedIn(false); // Update the login state
-                navigate('/login'); // Redirect to login page
+                logoutUser(); // Clear localStorage
+                // Trigger UI updates
+                window.dispatchEvent(new Event('loginStateChanged'));
+                navigate('/login');
             } catch (error) {
-                console.error('Failed to log out:', error);
-                alert('Something went wrong while logging out. Please try again.');
+                console.error('Logout failed:', error);
+                alert('Something went wrong. Please try again.');
             }
         }
     };
@@ -40,25 +46,16 @@ const Navbar = () => {
             </Link>
             {!isLoggedIn ? (
                 <>
-                    <Link
-                        to="/register"
-                        className="hover:text-blue-300 transition duration-300"
-                    >
+                    <Link to="/register" className="hover:text-blue-300 transition duration-300">
                         Register
                     </Link>
-                    <Link
-                        to="/login"
-                        className="hover:text-blue-300 transition duration-300"
-                    >
+                    <Link to="/login" className="hover:text-blue-300 transition duration-300">
                         Login
                     </Link>
                 </>
             ) : (
                 <>
-                    <Link
-                        to="/profile"
-                        className="hover:text-blue-300 transition duration-300"
-                    >
+                    <Link to="/profile" className="hover:text-blue-300 transition duration-300">
                         Profile
                     </Link>
                     <button

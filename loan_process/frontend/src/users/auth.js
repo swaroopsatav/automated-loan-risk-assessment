@@ -3,43 +3,46 @@ import API from './api';
 /**
  * Logs in the user by sending credentials to the backend API.
  * Stores the access and refresh tokens in localStorage on success.
- * @param {Object} credentials - The user's login credentials (e.g., email and password).
- * @returns {Object} - An object containing success status, message, and optional data.
+ * @param {Object} credentials - The user's login credentials containing username and password.
+ * @returns {Object} - An object containing success status and message.
  */
-export const loginUser = async (credentials) => {
-  try {
-    // Send a login request to the API
-    const res = await API.post('/api/users/auth/login/', credentials);
-    const { access, refresh } = res.data;
+export const loginUser = async ({username, password}) => {
+    try {
+        const response = await API.post('/api/users/auth/login/', {
+            username,
+            password
+        });
 
-    if (access && refresh) {
-      // Store tokens in localStorage
-      localStorage.setItem('access', access);
-      localStorage.setItem('refresh', refresh);
+        if (!response.ok) {
+            return {
+                success: false,
+                message: response.data.detail || 'Login failed.'
+            };
+        }
 
-      return {
-        success: true,
-        message: 'Login successful.',
-        data: res.data,
-      };
-    } else {
-      throw new Error('Invalid response: Access or Refresh token missing.');
+        const {access, refresh} = response.data;
+
+        if (access && refresh) {
+            localStorage.setItem('access', access);
+            localStorage.setItem('refresh', refresh);
+            return {
+                success: true,
+                message: 'Login successful.'
+            };
+        } else {
+            return {
+                success: false,
+                message: 'Invalid response: Access or refresh token missing.'
+            };
+        }
+
+    } catch (err) {
+        console.error('Login error:', err);
+        return {
+            success: false,
+            message: 'Unable to connect to the server. Please try again later.'
+        };
     }
-  } catch (err) {
-    // Log the error for debugging
-    console.error('Login error:', err);
-
-    // Handle different error scenarios
-    const errorMessage =
-      err.response?.data?.detail || // Server-side validation error
-      err.message || // Generic error message
-      'Login failed. Please check your credentials.';
-
-    return {
-      success: false,
-      message: errorMessage,
-    };
-  }
 };
 
 /**
@@ -47,10 +50,7 @@ export const loginUser = async (credentials) => {
  * Optionally, you can redirect the user to the login page or perform other actions.
  */
 export const logoutUser = () => {
-  // Clear tokens from localStorage
-  localStorage.removeItem('access');
-  localStorage.removeItem('refresh');
-
-  // Optionally, redirect to the login page
-  window.location.href = '/login';
+    localStorage.removeItem('access');
+    localStorage.removeItem('refresh');
+    window.dispatchEvent(new Event('loginStateChanged')); // trigger login state update
 };

@@ -1,3 +1,4 @@
+// api.js
 import axios from 'axios';
 
 const API = axios.create({
@@ -5,53 +6,57 @@ const API = axios.create({
   headers: { 'Content-Type': 'application/json' },
 });
 
+// Flag to prevent multiple refresh calls
+let isRefreshing = false;
+
 // Function to refresh the access token
 const refreshAccessToken = async () => {
   try {
-    const refreshToken = localStorage.getItem('refresh'); // Get the refresh token
+    const refreshToken = localStorage.getItem('refresh');
     if (!refreshToken) {
       throw new Error('No refresh token available');
     }
 
-    // Send a request to refresh the token
-    const response = await API.post('api/token/refresh/', {
+    // Call refresh endpoint
+    const response = await axios.post('http://localhost:8000/api/token/refresh/', {
       refresh: refreshToken,
     });
 
     const { access } = response.data;
-    localStorage.setItem('access', access); // Update the access token
+    localStorage.setItem('access', access);
     return access;
   } catch (error) {
     console.error('Failed to refresh token:', error);
 
-    // Clean up tokens on failure
+    // Clear tokens and redirect
     localStorage.removeItem('access');
     localStorage.removeItem('refresh');
-
-    // Optionally, redirect the user to the login page here
-    window.location.href = '/login'; // Redirect to login page
-    throw error; // Re-throw the error for further handling
+    window.location.href = '/login';
+    throw error;
   }
 };
 
-// Attach an access token if available and refresh the token if expired
+// Request interceptor: attach token and refresh if needed
 API.interceptors.request.use(
   async (config) => {
     try {
       let token = localStorage.getItem('access');
 
       if (token) {
-        // Decode the token to check expiry
-        const tokenPayload = JSON.parse(atob(token.split('.')[1])); // Decode the token payload
-        const tokenExpiry = tokenPayload.exp * 1000; // Convert expiry to milliseconds
-        const currentTime = Date.now();
+        const parts = token.split('.');
+        if (parts.length !== 3) throw new Error('Invalid JWT structure');
 
-        // Refresh the token if it has expired
-        if (currentTime >= tokenExpiry) {
+        const payload = JSON.parse(atob(parts[1]));
+        const tokenExpiry = payload.exp * 1000;
+        const currentTime = Date.now();
+        const EXPIRY_BUFFER = 30 * 1000; // 30s buffer
+
+        if (currentTime + EXPIRY_BUFFER >= tokenExpiry && !isRefreshing) {
+          isRefreshing = true;
           token = await refreshAccessToken();
+          isRefreshing = false;
         }
 
-        // Attach the token to the request headers
         config.headers.Authorization = `Bearer ${token}`;
       }
 
@@ -61,22 +66,18 @@ API.interceptors.request.use(
       return Promise.reject(error);
     }
   },
-  (error) => {
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );
 
-// Global error handling for responses
+// Response interceptor: handle global errors
 API.interceptors.response.use(
-  (response) => response, // Pass through successful responses
+  (response) => response,
   (error) => {
     if (error.response && error.response.status === 401) {
-      console.error('Unauthorized access - possible invalid token');
-
-      // Clean up tokens and redirect to log in
+      console.warn('Unauthorized - redirecting to login');
       localStorage.removeItem('access');
       localStorage.removeItem('refresh');
-      window.location.href = '/login'; // Redirect to the login page
+      window.location.href = '/login';
     }
     return Promise.reject(error);
   }

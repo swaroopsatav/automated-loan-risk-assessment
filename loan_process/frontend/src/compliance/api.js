@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Create an axios instance for compliance-related API calls
-const complianceAPI = axios.create({ baseURL: 'http://localhost:8000/' });
+const complianceAPI = axios.create({ baseURL: 'http://127.0.0.1:8000/api/' });
 
 // Add a request interceptor to include the authentication token
 complianceAPI.interceptors.request.use(

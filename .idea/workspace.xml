@@ -4,17 +4,34 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3109a877-066b-4d3c-ac92-9e8a24b67d04" name="Changes" comment="29/04/2025,10:25 AM">
+    <list default="true" id="3109a877-066b-4d3c-ac92-9e8a24b67d04" name="Changes" comment="29/04/2025,10:59 AM">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loan_process/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loan_process/compliances/migrations/0001_initial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/loan_process/compliances/migrations/0002_initial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/loan_process/creditscorings/migrations/0001_initial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/loan_process/creditscorings/migrations/0002_initial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/loan_process/creditscorings/migrations/0003_initial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/loan_process/db.sqlite3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/loan_process/frontend/src/compliance/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/frontend/src/compliance/api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loan_process/frontend/src/loans/LoanDetail.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/frontend/src/loans/LoanDetail.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loan_process/frontend/src/loans/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/frontend/src/loans/api.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/loan_process/frontend/src/users/LoginForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/frontend/src/users/LoginForm.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/loan_process/frontend/src/users/Navbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/frontend/src/users/Navbar.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/loan_process/frontend/src/users/PrivateRoute.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/frontend/src/users/PrivateRoute.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/loan_process/frontend/src/users/Profile.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/frontend/src/users/Profile.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loan_process/frontend/src/users/Profile.test.js.jsx" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/loan_process/frontend/src/users/RegisterForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/frontend/src/users/RegisterForm.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/loan_process/frontend/src/users/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/frontend/src/users/api.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/loan_process/frontend/src/users/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/frontend/src/users/auth.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loan_process/integrations/migrations/0001_initial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/loan_process/integrations/migrations/0002_initial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/loan_process/integrations/migrations/0003_initial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/loan_process/loan_process/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/loan_process/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loan_process/loanapplications/migrations/0001_initial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/loan_process/loanapplications/migrations/0002_initial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/loan_process/riskdashboards/migrations/0001_initial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/loan_process/users/migrations/0001_initial.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -90,6 +107,7 @@
   },
   "keyToStringList": {
     "DatabaseDriversLRU": [
+      "mysql",
       "sqlite"
     ]
   }
@@ -165,7 +183,7 @@
       <workItem from="1745741859471" duration="21418000" />
       <workItem from="1745813989524" duration="124000" />
       <workItem from="1745814114706" duration="28730000" />
-      <workItem from="1745899555540" duration="4883000" />
+      <workItem from="1745899555540" duration="18340000" />
     </task>
     <task id="LOCAL-00001" summary="26/04/2025,6:33 PM">
       <option name="closed" value="true" />
@@ -327,7 +345,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745902552545</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="29/04/2025,10:59 AM">
+      <option name="closed" value="true" />
+      <created>1745904568988</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1745904568988</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -357,7 +383,8 @@
     <MESSAGE value="29/04/2025,9:39 AM" />
     <MESSAGE value="29/04/2025,10:14 AM" />
     <MESSAGE value="29/04/2025,10:25 AM" />
-    <option name="LAST_COMMIT_MESSAGE" value="29/04/2025,10:25 AM" />
+    <MESSAGE value="29/04/2025,10:59 AM" />
+    <option name="LAST_COMMIT_MESSAGE" value="29/04/2025,10:59 AM" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -369,6 +396,10 @@
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/loan_process/loanapplications/management/commands/export_training_data.py</url>
           <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/loan_process/users/serializers.py</url>
+          <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -1,37 +1,34 @@
-import React, { useState } from 'react';
-import { loginUser } from './auth';
-import { useNavigate } from 'react-router-dom';
+import React, {useState} from 'react';
+import {loginUser} from './auth';
+import {useNavigate} from 'react-router-dom';
 
 const LoginForm = () => {
-    const [form, setForm] = useState({ username: '', password: '' });
+    const [form, setForm] = useState({username: '', password: ''});
     const [error, setError] = useState('');
-    const [isLoading, setIsLoading] = useState(false); // Loading state
+    const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
-    // Handle input changes
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        setForm((prevState) => ({ ...prevState, [name]: value.trim() }));
+        const {name, value} = e.target;
+        setForm((prevState) => ({...prevState, [name]: value.trim()}));
     };
 
-    // Handle form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setError(''); // Clear previous errors
-        setIsLoading(true); // Show loading indicator
+        setError('');
+        setIsLoading(true);
 
         try {
             const response = await loginUser(form);
             if (response.success) {
-                navigate('/profile'); // Redirect to the profile page on success
+                navigate('/profile');
             } else {
-                setError(response.message); // Show a server-side error message
+                setError(response.message);
             }
-            // eslint-disable-next-line no-unused-vars
         } catch (err) {
             setError('Unable to connect to the server. Please try again later.');
         } finally {
-            setIsLoading(false); // Hide loading indicator
+            setIsLoading(false);
         }
     };
 
@@ -70,14 +67,14 @@ const LoginForm = () => {
             </div>
             <button
                 type="submit"
-                disabled={isLoading} // Disable button during loading
+                disabled={isLoading}
                 className={`w-full px-4 py-2 rounded-lg transition duration-300 ${
                     isLoading
                         ? 'bg-gray-400 cursor-not-allowed'
                         : 'bg-blue-500 text-white hover:bg-blue-600'
                 }`}
             >
-                {isLoading ? 'Logging in...' : 'Login'} {/* Show loading text */}
+                {isLoading ? 'Logging in...' : 'Login'}
             </button>
         </form>
     );

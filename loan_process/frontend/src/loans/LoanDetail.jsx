@@ -9,13 +9,29 @@ const LoanDetail = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    setLoading(true);
     const fetchLoan = async () => {
       try {
-        const response = await loanAPI.get(`api/loans/${id}/`);
-        setLoan(response.data);
+        const response = await loanAPI.get(`/loans/${id}/`);
+        const cleanLoan = {
+          ...response.data,
+          documents: response.data.documents || [],
+          ml_scoring_output: response.data.ml_scoring_output || {},
+          ai_decision: response.data.ai_decision || 'N/A',
+          risk_score: response.data.risk_score ?? 'N/A',
+        };
+        setLoan(cleanLoan);
       } catch (err) {
         console.error('Error fetching loan details:', err);
-        setError('Failed to load loan details. Please try again.');
+        if (!err.response) {
+          setError('Network error. Please check your connection.');
+        } else if (err.response.status === 404) {
+          setError('Loan not found.');
+        } else if (err.response.status === 500) {
+          setError('Server error. Please try again later.');
+        } else {
+          setError('Failed to load loan details. Please try again later.');
+        }
       } finally {
         setLoading(false);
       }
@@ -24,29 +40,50 @@ const LoanDetail = () => {
     fetchLoan();
   }, [id]);
 
-  if (loading) return <p className="p-4 text-center">Loading...</p>;
-  if (error) return <p className="p-4 text-red-500 text-center">{error}</p>;
+  if (loading) {
+    return <p className="p-4 text-center">Loading loan details...</p>; // Optionally, add a spinner here
+  }
+
+  if (error) {
+    return <p className="p-4 text-red-500 text-center">{error}</p>;
+  }
 
   return (
-    <div className="p-4 max-w-2xl mx-auto space-y-2 bg-white shadow rounded">
-      <h2 className="text-xl font-semibold">Loan #{loan.id}</h2>
-      <p><strong>Status:</strong> {loan.status}</p>
-      <p><strong>Risk Score:</strong> {loan.risk_score}</p>
-      <p><strong>AI Decision:</strong> {loan.ai_decision}</p>
-      <p><strong>Purpose:</strong> {loan.purpose}</p>
-      <p><strong>Scoring Breakdown:</strong></p>
-      <pre className="bg-gray-100 p-2 rounded text-sm overflow-x-auto">{JSON.stringify(loan.ml_scoring_output, null, 2)}</pre>
+    <div className="p-4 max-w-2xl mx-auto space-y-4 bg-white shadow rounded">
+      <h2 className="text-xl font-semibold">Loan #{loan?.id ?? 'N/A'}</h2>
+      <p><strong>Status:</strong> {loan?.status ?? 'Unknown'}</p>
+      <p><strong>Risk Score:</strong> {loan?.risk_score}</p>
+      <p><strong>AI Decision:</strong> {loan?.ai_decision}</p>
+      <p><strong>Purpose:</strong> {loan?.purpose ?? 'N/A'}</p>
 
-      <h4 className="font-medium mt-4">Documents</h4>
-      <ul className="list-disc list-inside">
-        {loan.documents?.map((doc) => (
-          <li key={doc.id}>
-            <a href={doc.file} target="_blank" rel="noopener noreferrer" className="text-blue-600">
-              {doc.document_type}
-            </a>
-          </li>
-        ))}
-      </ul>
+      <div>
+        <strong>Scoring Breakdown:</strong>
+        <pre className="bg-gray-100 p-2 rounded text-sm overflow-x-auto whitespace-pre-wrap">
+          {JSON.stringify(loan?.ml_scoring_output, null, 2)}
+        </pre>
+      </div>
+
+      <div>
+        <h4 className="font-medium mt-4">Documents</h4>
+        {loan?.documents?.length > 0 ? (
+          <ul className="list-disc list-inside">
+            {loan.documents.map((doc, index) => (
+              <li key={doc.id ?? index}>
+                <a
+                  href={doc.file ?? '#'}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 hover:underline"
+                >
+                  {doc.document_type ?? 'Unknown Document'}
+                </a>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>No documents available for this loan.</p>
+        )}
+      </div>
     </div>
   );
 };

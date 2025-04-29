@@ -3,11 +3,8 @@ import API from './api';
 
 const Profile = () => {
     const [profile, setProfile] = useState(null);
-    profile.last_experian_sync = undefined;
-    profile.credit_score = undefined;
-    profile.is_kyc_verified = undefined;
-    const [isLoading, setIsLoading] = useState(true); // Loading state
-    const [error, setError] = useState(''); // Error state
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState('');
 
     useEffect(() => {
         const fetchProfile = async () => {
@@ -22,7 +19,7 @@ const Profile = () => {
                         : 'Failed to load profile. Please try again later.'
                 );
             } finally {
-                setIsLoading(false); // Stop loading once the request is done
+                setIsLoading(false);
             }
         };
 
@@ -30,14 +27,13 @@ const Profile = () => {
     }, []);
 
     if (isLoading) {
-        return <p className="text-center">Loading...</p>; // Display a loading message
+        return <p className="text-center">Loading...</p>;
     }
 
     if (error) {
-        return <p className="text-center text-red-600">{error}</p>; // Display an error message
+        return <p className="text-center text-red-600">{error}</p>;
     }
 
-    // Utility function for rendering readonly fields
     const renderField = (label, value, type = 'text') => (
         <div>
             <label className="block font-bold">{label}:</label>
