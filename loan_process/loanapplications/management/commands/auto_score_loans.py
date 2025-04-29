@@ -26,7 +26,7 @@ class Command(BaseCommand):
             ).select_related('user', 'credit_scoring_record')
 
             if not loans.exists():
-                self.stdout.write(self.style.SUCCESS("✅ No unscored loans."))
+                self.stdout.write("✅ No unscored loans.\n")
                 return
 
             updated = 0
@@ -70,14 +70,12 @@ class Command(BaseCommand):
                     updated += 1
 
                     self.stdout.write(
-                        self.style.SUCCESS(
-                            f"Loan #{loan.id} scored: risk_score={risk_score}, decision={decision}"
-                        )
+                        f"Loan #{loan.id} scored: risk_score={risk_score}, ai_decision={decision}\n"
                     )
 
                 except Exception as e:
                     self.stdout.write(
-                        self.style.ERROR(f"⚠️ Loan #{loan.id} failed: {str(e)}")
+                        f"⚠️ Loan #{loan.id} failed: {str(e)}\n"
                     )
                     errors += 1
 
@@ -85,12 +83,12 @@ class Command(BaseCommand):
             summary = f"✅ Scored {updated} loans"
             if dry_run:
                 self.stdout.write(
-                    self.style.WARNING(f"{summary} (dry run, no changes saved).")
+                    f"✅ Scored {updated} loans (dry run, no changes saved).\n"
                 )
             else:
-                self.stdout.write(self.style.SUCCESS(f"{summary}."))
+                self.stdout.write(f"{summary}.\n")
 
             if errors > 0:
                 self.stdout.write(
-                    self.style.ERROR(f"⚠️ {errors} loan(s) failed to score.")
+                    f"⚠️ {errors} loan(s) failed to score.\n"
                 )

@@ -71,7 +71,7 @@ const LoanDetail = () => {
         <h4 className="font-medium mt-4">Documents</h4>
         {loan?.documents?.length > 0 ? (
           <ul className="list-disc list-inside">
-            {loan.documents.map((doc, index) => (
+            {loan?.documents.map((doc, index) => (
               <li key={doc.id ?? index}>
                 <a
                   href={doc.file ?? '#'}

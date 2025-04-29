@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 
 // Importing user-related components
 import RegisterForm from './users/RegisterForm';
@@ -44,37 +44,40 @@ const App = () => {
       {/* Main content section */}
       <div className="min-h-screen bg-gray-100 p-4">
         <Routes>
+          {/* Home route - redirects based on authentication status */}
+          <Route path="/" element={<PrivateRoute><Navigate to="/profile" replace /></PrivateRoute>} />
+
           {/* User routes */}
           <Route path="/register" element={<RegisterForm />} />
           <Route path="/login" element={<LoginForm />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
 
           {/* Loan routes */}
-          <Route path="/loans/apply" element={<LoanSubmitForm />} />
-          <Route path="/loans" element={<MyLoanList />} />
-          <Route path="/loans/:id" element={<LoanDetail />} />
-          <Route path="/document/upload" element={<LoanDocumentUpload />} />
+          <Route path="/loans/apply" element={<PrivateRoute><LoanSubmitForm /></PrivateRoute>} />
+          <Route path="/loans" element={<PrivateRoute><MyLoanList /></PrivateRoute>} />
+          <Route path="/loans/:id" element={<PrivateRoute><LoanDetail /></PrivateRoute>} />
+          <Route path="/document/upload" element={<PrivateRoute><LoanDocumentUpload /></PrivateRoute>} />
 
           {/* Credit routes */}
-          <Route path="/score/loan/:loan_id" element={<ScoreViewer />} />
-          <Route path="/rescore" element={<RescoreButton />} />
-          <Route path="/admin/scores" element={<AdminScoreList />} />
-          <Route path="/admin/scores/:id" element={<AdminScoreDetail />} />
+          <Route path="/score/loan/:loan_id" element={<PrivateRoute><ScoreViewer /></PrivateRoute>} />
+          <Route path="/rescore" element={<PrivateRoute><RescoreButton /></PrivateRoute>} />
+          <Route path="/admin/scores" element={<PrivateRoute><AdminScoreList /></PrivateRoute>} />
+          <Route path="/admin/scores/:id" element={<PrivateRoute><AdminScoreDetail /></PrivateRoute>} />
 
           {/* Risk dashboard routes */}
-          <Route path="/risk/snapshots" element={<RiskSnapshotList />} />
-          <Route path="/risk/trends" element={<RiskTrendChart />} />
-          <Route path="/risk/models" element={<ModelPerformanceLog />} />
+          <Route path="/risk/snapshots" element={<PrivateRoute><RiskSnapshotList /></PrivateRoute>} />
+          <Route path="/risk/trends" element={<PrivateRoute><RiskTrendChart /></PrivateRoute>} />
+          <Route path="/risk/models" element={<PrivateRoute><ModelPerformanceLog /></PrivateRoute>} />
 
           {/* Compliance routes */}
-          <Route path="/compliance/loan/:loanId" element={<LoanComplianceChecks />} />
-          <Route path="/compliance/check/:id/edit" element={<ComplianceCheckUpdate />} />
-          <Route path="/compliance/audit-trail" element={<ComplianceAuditTrail />} />
+          <Route path="/compliance/loan/:loanId" element={<PrivateRoute><LoanComplianceChecks /></PrivateRoute>} />
+          <Route path="/compliance/check/:id/edit" element={<PrivateRoute><ComplianceCheckUpdate /></PrivateRoute>} />
+          <Route path="/compliance/audit-trail" element={<PrivateRoute><ComplianceAuditTrail /></PrivateRoute>} />
 
           {/* Integration routes */}
-          <Route path="/mock/kyc" element={<MockKYCViewer />} />
-          <Route path="/mock/experian/:loanId" element={<MockExperianViewer />} />
-          <Route path="/mock/experian/all" element={<AdminMockExperianList />} />
+          <Route path="/mock/kyc" element={<PrivateRoute><MockKYCViewer /></PrivateRoute>} />
+          <Route path="/mock/experian/:loanId" element={<PrivateRoute><MockExperianViewer /></PrivateRoute>} />
+          <Route path="/mock/experian/all" element={<PrivateRoute><AdminMockExperianList /></PrivateRoute>} />
         </Routes>
       </div>
     </Router>

@@ -432,7 +432,7 @@ class LoanApplicationCreateViewTest(TestCase):
             'existing_loans': False,
         }
         response = self.client.post(reverse('loans:loan-submit'), data)
-        self.assertNotEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     @patch('loanapplications.views.score_loan_application', side_effect=Exception('AI Scoring Failed'))
     def test_loan_application_ai_scoring_failure(self, mock_score):
@@ -483,7 +483,7 @@ class LoanDocumentUploadViewTest(TestCase):
             'file': 'test_file.pdf',
         }
         response = self.client.post(reverse('loans:loan-documents', args=[self.loan.id]), data)
-        self.assertNotEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_upload_document_unauthorized(self):
         other_user = CustomUser.objects.create_user(username='otheruser', password='password123',email="otheruser@test.com")
@@ -495,7 +495,7 @@ class LoanDocumentUploadViewTest(TestCase):
             'file': 'test_file.pdf',
         }
         response = other_client.post(reverse('loans:loan-documents', args=[self.loan.id]), data)
-        self.assertNotEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
 
 class AdminLoanListViewTest(TestCase):
@@ -877,7 +877,7 @@ class TestGenerateMockLoansCommand(unittest.TestCase):
         with patch("sys.stdout") as mock_stdout:
             self.command.handle(count=2, min_amount=50000, max_amount=1000000)
 
-        self.assertNotEqual(mock_loan_create.call_count, 2)
+        self.assertEqual(mock_loan_create.call_count, 2)
         self.assertEqual(mock_report_create.call_count, 2)
         mock_stdout.write.assert_any_call("✅ Created 2 mock loans with approval labels.\n")
 

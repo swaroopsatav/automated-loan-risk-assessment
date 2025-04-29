@@ -42,8 +42,8 @@ class Command(BaseCommand):
         output_dir = kwargs.get('output_dir', 'ml_models')
 
         if not os.path.exists(file_path):
-            msg = f"❌ CSV file not found at {file_path}. Run export_training_data first."
-            self.stdout.write(self.style.ERROR(msg))
+            msg = f"❌ CSV file not found at {file_path}. Run export_training_data first.\n"
+            self.stdout.write(msg)
             logger.error(msg)
             return
 
@@ -58,8 +58,8 @@ class Command(BaseCommand):
 
             missing_cols = [col for col in expected_columns if col not in df.columns]
             if missing_cols:
-                msg = f"❌ Missing columns in CSV file: {', '.join(missing_cols)}"
-                self.stdout.write(self.style.ERROR(msg))
+                msg = f"❌ Missing columns in CSV file: {', '.join(missing_cols)}\n"
+                self.stdout.write(msg)
                 logger.error(msg)
                 return
 
@@ -114,9 +114,7 @@ class Command(BaseCommand):
             xgb_report = classification_report(y_test, xgb_preds)
             joblib.dump(xgb_model, os.path.join(output_dir, "xgboost_loan_model.pkl"))
 
-            self.stdout.write(self.style.SUCCESS(
-                f"✅ XGBoost model saved to {output_dir}/xgboost_loan_model.pkl"
-            ))
+            self.stdout.write(f"✅ XGBoost model saved to {output_dir}/xgboost_loan_model.pkl\n")
             self.stdout.write("📊 XGBoost Report:\n" + xgb_report)
             logger.info("XGBoost training complete. Report:\n" + xgb_report)
 
@@ -146,9 +144,7 @@ class Command(BaseCommand):
             lgb_report = classification_report(y_test, lgb_preds)
             joblib.dump(lgb_model, os.path.join(output_dir, "lightgbm_loan_model.pkl"))
 
-            self.stdout.write(self.style.SUCCESS(
-                f"✅ LightGBM model saved to {output_dir}/lightgbm_loan_model.pkl"
-            ))
+            self.stdout.write(f"✅ LightGBM model saved to {output_dir}/lightgbm_loan_model.pkl\n")
             self.stdout.write("📊 LightGBM Report:\n" + lgb_report)
             logger.info("LightGBM training complete. Report:\n" + lgb_report)
 
@@ -156,7 +152,7 @@ class Command(BaseCommand):
             joblib.dump(list(X.columns), os.path.join(output_dir, "feature_names.pkl"))
 
         except Exception as e:
-            msg = f"❌ An error occurred: {str(e)}"
-            self.stdout.write(self.style.ERROR(msg))
+            msg = f"❌ An error occurred: {str(e)}\n"
+            self.stdout.write(msg)
             logger.error(msg, exc_info=True)
             raise

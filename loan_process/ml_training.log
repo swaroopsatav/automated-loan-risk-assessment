@@ -183,3 +183,49 @@ Traceback (most recent call last):
     raise KeyError(f"{labels[mask].tolist()} not found in axis")
 KeyError: "['loan_approved'] not found in axis"
 2025-04-28 16:39:52,977 - ERROR - ❌ CSV file not found at loan_training_data.csv. Run export_training_data first.
+2025-04-29 18:56:15,218 - ERROR - ❌ CSV file not found at loan_training_data.csv. Run export_training_data first.
+2025-04-29 18:56:15,239 - ERROR - ❌ CSV file not found at loan_training_data.csv. Run export_training_data first.
+2025-04-29 18:56:15,242 - ERROR - ❌ CSV file not found at loan_training_data.csv. Run export_training_data first.
+2025-04-29 18:56:15,245 - ERROR - ❌ CSV file not found at loan_training_data.csv. Run export_training_data first.
+2025-04-29 18:56:15,248 - ERROR - ❌ CSV file not found at loan_training_data.csv. Run export_training_data first.
+2025-04-29 18:56:15,252 - ERROR - ❌ CSV file not found at loan_training_data.csv. Run export_training_data first.
+2025-04-29 18:56:15,255 - ERROR - ❌ CSV file not found at loan_training_data.csv. Run export_training_data first.
+2025-04-29 18:56:15,261 - ERROR - ❌ CSV file not found at loan_training_data.csv. Run export_training_data first.
+2025-04-29 18:56:15,263 - ERROR - ❌ CSV file not found at loan_training_data.csv. Run export_training_data first.
+2025-04-29 18:56:15,266 - ERROR - ❌ CSV file not found at loan_training_data.csv. Run export_training_data first.
+2025-04-29 18:56:15,267 - ERROR - ❌ CSV file not found at loan_training_data.csv. Run export_training_data first.
+2025-04-29 18:56:15,268 - ERROR - ❌ CSV file not found at loan_training_data.csv. Run export_training_data first.
+2025-04-29 18:56:15,270 - ERROR - ❌ CSV file not found at loan_training_data.csv. Run export_training_data first.
+2025-04-29 18:56:15,278 - ERROR - ❌ An error occurred: Mock CSV read error
+Traceback (most recent call last):
+  File "/home/aspl-81/PycharmProjects/Python-Project/loan_process/loanapplications/management/commands/train_loan_model.py", line 52, in handle
+    df = pd.read_csv(file_path)
+         ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/mock.py", line 1134, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/mock.py", line 1138, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/mock.py", line 1193, in _execute_mock_call
+    raise effect
+Exception: Mock CSV read error
+2025-04-29 18:56:15,291 - ERROR - ❌ CSV file not found at nonexistent.csv. Run export_training_data first.
+2025-04-29 18:56:15,293 - ERROR - ❌ Missing columns in CSV file: monthly_income, employment_status, existing_loans, credit_history_fetched, amount_requested, term_months, loan_to_income_ratio, credit_util_pct, emi_to_income_ratio, dpd_max, overdue_accounts, total_accounts, bureau_score, score_band, is_kyc_verified, govt_id_type, age, address_length, loan_approved
+2025-04-29 18:56:15,354 - ERROR - ❌ An error occurred: "['loan_approved'] not found in axis"
+Traceback (most recent call last):
+  File "/home/aspl-81/PycharmProjects/Python-Project/loan_process/loanapplications/management/commands/train_loan_model.py", line 73, in handle
+    X = df.drop(columns=['loan_approved'])
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/aspl-81/.local/lib/python3.12/site-packages/pandas/core/frame.py", line 5581, in drop
+    return super().drop(
+           ^^^^^^^^^^^^^
+  File "/home/aspl-81/.local/lib/python3.12/site-packages/pandas/core/generic.py", line 4788, in drop
+    obj = obj._drop_axis(labels, axis, level=level, errors=errors)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/aspl-81/.local/lib/python3.12/site-packages/pandas/core/generic.py", line 4830, in _drop_axis
+    new_axis = axis.drop(labels, errors=errors)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/aspl-81/.local/lib/python3.12/site-packages/pandas/core/indexes/base.py", line 7070, in drop
+    raise KeyError(f"{labels[mask].tolist()} not found in axis")
+KeyError: "['loan_approved'] not found in axis"

@@ -44,7 +44,7 @@ class Command(BaseCommand):
                 ).all()
 
                 if not loans.exists():
-                    self.stdout.write(self.style.WARNING("No loan records found"))
+                    self.stdout.write("No loan records found\n")
                     return
 
                 for loan in loans:
@@ -106,15 +106,15 @@ class Command(BaseCommand):
                         count += 1
 
                         if count % 100 == 0:
-                            self.stdout.write(f"✅ Processed {count} records...")
+                            self.stdout.write(f"✅ Processed {count} records...\n")
 
                     except Exception as e:
-                        self.stdout.write(self.style.WARNING(f"⚠️ Skipped loan #{loan.id} due to: {str(e)}"))
+                        self.stdout.write(f"⚠️ Skipped loan #{loan.id} due to: {str(e)}\n")
                         continue
 
-                self.stdout.write(self.style.SUCCESS(f"✅ Exported {count} records to {output_file}"))
+                self.stdout.write(f"✅ Exported {count} records to {output_file}\n")
 
         except IOError as e:
-            self.stdout.write(self.style.ERROR(f"Failed to write to file {output_file}: {str(e)}"))
+            self.stdout.write(f"Failed to write to file {output_file}: {str(e)}\n")
         except Exception as e:
             self.stdout.write(self.style.ERROR(f"An unexpected error occurred: {str(e)}"))

@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Create an axios instance with a base URL for loan-related API calls
 const loanAPI = axios.create({
-  baseURL: 'http://localhost:8000/',
+  baseURL: 'http://localhost:8000',
 });
 
 // Add a request interceptor to include authentication token
