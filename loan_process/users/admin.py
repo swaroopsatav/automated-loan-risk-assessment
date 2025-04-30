@@ -19,7 +19,8 @@ def mark_kyc_verified(modeladmin, request, queryset):
         kyc_verified_on=now()
     )
     logger.info(f"KYC Verified updated for {updated_count} user(s).")
-    modeladmin.message_user(request, f"Successfully marked {updated_count} user(s) as KYC Verified.")
+    if modeladmin is not None:
+        modeladmin.message_user(request, f"Successfully marked {updated_count} user(s) as KYC Verified.")
 
 
 @admin.register(CustomUser)

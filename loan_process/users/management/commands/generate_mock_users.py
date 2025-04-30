@@ -48,7 +48,9 @@ class Command(BaseCommand):
                     logger.error(f"Error during batch creation: {str(e)}")
                     self.stdout.write(self.style.ERROR(f"❌ Error during batch creation: {str(e)}"))
                     total_errors += len(batch)
-                    continue
+                    # Break the loop if we encounter an exception during bulk_create
+                    # This ensures we don't get stuck in an infinite loop if bulk_create always fails
+                    break
 
         summary = f"\n✅ Process completed:\n"
         summary += f"- Successfully created: {created} users\n"

@@ -1,9 +1,3 @@
-"""
-URL Configuration for the Users app.
-
-Defines routes for user registration, login, profile management,
-and admin-related user operations.
-"""
 
 from django.urls import path
 from .views import (

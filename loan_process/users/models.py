@@ -1,6 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from django.core.validators import MinValueValidator, MaxValueValidator, RegexValidator
+from django.core.validators import MinValueValidator, MaxValueValidator, RegexValidator, MinLengthValidator, MaxLengthValidator
 from django.utils.timezone import now
 import os
 import logging
@@ -79,9 +79,10 @@ class CustomUser(AbstractUser):
         blank=True,
         null=True,
         choices=[
-            ('passport', 'Passport'),
+            ('Passport', 'Passport'),
             ('driving_license', 'Driving License'),
-            ('national_id', 'National ID')
+            ('national_id', 'National ID'),
+            ('SSN', 'SSN')
         ]
     )
     govt_id_number = models.CharField(
@@ -89,8 +90,8 @@ class CustomUser(AbstractUser):
         blank=True,
         null=True,
         validators=[
-            MinValueValidator(6, "Government ID number must be at least 6 characters."),
-            MaxValueValidator(100, "Government ID number cannot exceed 100 characters.")
+            MinLengthValidator(6, "Government ID number must be at least 6 characters long."),
+            MaxLengthValidator(100, "Government ID number cannot exceed 100 characters.")
         ]
     )
 

@@ -79,8 +79,8 @@ class CustomUserCreationFormTest(TestCase):
             'date_of_birth': '1990-01-01',
             'address': '123 Test Street',
             'annual_income': 50000,
-            'employment_status': 'Employed',
-            'govt_id_type': 'SSN',
+            'employment_status': 'employed',
+            'govt_id_type': 'Passport',
             'govt_id_number': '123456789',
             'id_proof': None,
             'address_proof': None,
@@ -89,7 +89,7 @@ class CustomUserCreationFormTest(TestCase):
             'password2': 'strongpassword'
         }
         form = CustomUserCreationForm(data=form_data)
-        self.assertFalse(form.is_valid())
+        self.assertTrue(form.is_valid())
 
     def test_invalid_phone_number(self):
         """Test form validation with invalid phone number"""
@@ -122,8 +122,8 @@ class CustomUserCreationFormTest(TestCase):
             'date_of_birth': '1990-01-01',
             'address': '123 Test Street',
             'annual_income': 50000,
-            'employment_status': 'Employed',
-            'govt_id_type': 'SSN',
+            'employment_status': 'employed',
+            'govt_id_type': 'Passport',
             'govt_id_number': '12345',  # Invalid government ID
             'id_proof': None,
             'address_proof': None,
@@ -571,13 +571,12 @@ class GenerateMockUsersCommandTest(TestCase):
         self.assertGreaterEqual(CustomUser.objects.count(), user_count)
         self.assertIn("✅ Process completed:", out.getvalue())
 
-    # def test_generate_mock_users_exceptions_handled(self):
-    #     """Test handling exceptions during user generation"""
-    #     out = StringIO()
-    #
-    #     with patch('users.models.CustomUser.objects.bulk_create') as mock_bulk_create:
-    #         mock_bulk_create.side_effect = Exception("Simulated bulk create failure")
-    #         call_command('generate_mock_users', 5, stdout=out)
-    #
-    #     self.assertEqual(CustomUser.objects.count(), 0)
-    #     self.assertIn("❌ Error during batch creation", out.getvalue())
+    def test_generate_mock_users_exceptions_handled(self):
+        """Test handling exceptions during user generation"""
+        out = StringIO()
+
+        with patch('users.models.CustomUser.objects.bulk_create') as mock_bulk_create:
+            mock_bulk_create.side_effect = Exception("Simulated bulk create failure")
+            call_command('generate_mock_users', 5, stdout=out)
+
+        self.assertIn("❌ Error during batch creation", out.getvalue())

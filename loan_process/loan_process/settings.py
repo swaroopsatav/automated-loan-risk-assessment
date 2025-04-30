@@ -84,30 +84,30 @@ TEMPLATES = [
 WSGI_APPLICATION = "loan_process.wsgi.application"
 
 
-# Database
-# https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
+#Database
+#https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'loan_processing',
-        'USER': 'loan_user',
-        'PASSWORD': 'Welcome12!',
-        'HOST': 'localhost',
-        'PORT': '3306',
-        # 'PORT': '',  # Leave empty for socket
-        # 'OPTIONS': {
-        #     'unix_socket': '/var/run/mysqld/mysqld.sock',  # Correct socket path
-        # },
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'loan_processing',
+#         'USER': 'loan_user',
+#         'PASSWORD': 'Welcome12!',
+#         'HOST': 'localhost',
+#         'PORT': '3306',
+#         # 'PORT': '',  # Leave empty for socket
+#         # 'OPTIONS': {
+#         #     'unix_socket': '/var/run/mysqld/mysqld.sock',  # Correct socket path
+#         # },
+#     }
+# }
 
 
 # Password validation

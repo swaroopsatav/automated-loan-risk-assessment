@@ -8,6 +8,7 @@ from .serializers import (
     UserRegistrationSerializer,
     UserDetailSerializer,
     SecureUserSerializer,
+    UserProfileSerializer,
 )
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -32,11 +33,19 @@ class RegisterUserView(generics.CreateAPIView):
             response.data["message"] = "User registered successfully."
             return response
         except ValidationError as e:
-            # If validation fails, return a custom error message
-            return Response(
-                {"error": str(e)},  # Return the stringified validation error
-                status=status.HTTP_400_BAD_REQUEST
-            )
+            # If validation fails, return the validation errors directly
+            if hasattr(e, 'detail') and isinstance(e.detail, dict) and 'password' in e.detail:
+                # If it's a password validation error, return it directly
+                return Response(
+                    e.detail,
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+            else:
+                # For other errors, keep the current format
+                return Response(
+                    {"error": str(e)},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
 
 # --- Login View (JWT-based) ---
 class LoginView(APIView):
@@ -102,7 +111,7 @@ class UserProfileView(generics.RetrieveUpdateAPIView):
     GET: Fetch the authenticated user's profile.
     PUT/PATCH: Update the authenticated user's profile.
     """
-    serializer_class = UserDetailSerializer
+    serializer_class = UserProfileSerializer
     permission_classes = [permissions.IsAuthenticated]
 
     def get_object(self):

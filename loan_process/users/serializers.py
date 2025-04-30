@@ -92,7 +92,7 @@ class UserDetailSerializer(serializers.ModelSerializer):
 class SecureUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ['username','password']
+        fields = ['username', 'email', 'is_kyc_verified']
         read_only_fields = fields
 
 
