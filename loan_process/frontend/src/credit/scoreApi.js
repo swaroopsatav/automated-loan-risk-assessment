@@ -1,55 +1,8 @@
-import axios from 'axios';
-import { API_CONFIG, AUTH_CONFIG } from '../config';
+// Import the shared API utility
+import { createApiInstance } from '../utils/apiUtils';
 
-// Create an axios instance with a base URL
-const scoreApi = axios.create({
-  baseURL: API_CONFIG.baseURL,
-  headers: API_CONFIG.headers,
-  timeout: API_CONFIG.timeout,
-});
-
-// Add a request interceptor for including the authentication token
-scoreApi.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem('access');
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    } else {
-      console.warn('No access token found in localStorage');
-    }
-    return config;
-  },
-  (error) => {
-    // Handle errors before the request is sent
-    console.error('Error in request:', error);
-    return Promise.reject(error);
-  }
-);
-
-// Add a response interceptor for handling responses globally
-scoreApi.interceptors.response.use(
-  (response) => {
-    // Handle successful responses
-    return response;
-  },
-  (error) => {
-    // Handle errors globally
-    if (error.response) {
-      console.error('Response error:', error.response);
-      if (error.response.status === 401) {
-        // Handle token expiration or unauthorized access
-        console.error('Unauthorized request. Redirecting to login...');
-        window.location.href = AUTH_CONFIG.loginRedirectUrl; // Redirect to login page
-      }
-    } else if (error.request) {
-      // Handle errors where no response was received
-      console.error('No response received:', error.request);
-    } else {
-      // Handle other types of errors
-      console.error('Error setting up request:', error.message);
-    }
-    return Promise.reject(error);
-  }
-);
+// Create a score-specific API instance with the shared utility
+// This allows for score-specific customization if needed in the future
+const scoreApi = createApiInstance();
 
 export default scoreApi;

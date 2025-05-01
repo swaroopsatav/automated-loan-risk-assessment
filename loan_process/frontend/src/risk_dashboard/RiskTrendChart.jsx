@@ -13,7 +13,7 @@ const RiskTrendChart = () => {
   useEffect(() => {
     const fetchTrendData = async () => {
       try {
-        const response = await riskAPI.get('risk/trends/');
+        const response = await riskAPI.get('/api/risk/trends/');
         setTrendData(response.data);
       } catch (err) {
         console.error('Error fetching trend data:', err);

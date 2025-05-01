@@ -9,7 +9,7 @@ const ModelPerformanceLog = () => {
   useEffect(() => {
     const fetchLogs = async () => {
       try {
-        const response = await riskAPI.get('api/risk/models/');
+        const response = await riskAPI.get('/api/risk/models/');
         setLogs(response.data);
       } catch (err) {
         console.error('Error fetching model performance logs:', err);

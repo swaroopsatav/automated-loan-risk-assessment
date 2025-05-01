@@ -9,7 +9,7 @@ const ComplianceAuditTrail = () => {
   useEffect(() => {
     const fetchAuditTrail = async () => {
       try {
-        const response = await complianceAPI.get('compliance/audit-trail/');
+        const response = await complianceAPI.get('/api/compliance/audit-trail/');
         setLogs(response.data);
       } catch (err) {
         console.error('Error fetching audit trail:', err);

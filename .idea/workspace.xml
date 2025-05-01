@@ -4,36 +4,32 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3109a877-066b-4d3c-ac92-9e8a24b67d04" name="Changes" comment="01/05/2025,4:24 PM">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/1b601872-e954-4e24-8aaa-6d2014464085.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/1b601872-e954-4e24-8aaa-6d2014464085/storage_v2/_src_/schema/main.uQUzAA.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/7956e46c-7691-4ccb-8ab3-1f416a8fcc67.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/7956e46c-7691-4ccb-8ab3-1f416a8fcc67/storage_v2/_src_/schema/main.uQUzAA.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/project.xml" afterDir="false" />
+    <list default="true" id="3109a877-066b-4d3c-ac92-9e8a24b67d04" name="Changes" comment="01/05/2025,10:14 PM">
+      <change afterPath="$PROJECT_DIR$/loan_process/frontend/src/utils/apiUtils.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loan_process/compliances/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/compliances/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loan_process/compliances/management/commands/run_compliance_checks.py" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/compliances/management/commands/run_compliance_checks.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loan_process/compliances/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/compliances/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loan_process/compliances/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/compliances/tests.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loan_process/creditscorings/management/commands/score_and_record.py" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/creditscorings/management/commands/score_and_record.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loan_process/creditscorings/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/creditscorings/tests.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loan_process/creditscorings/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/creditscorings/utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loan_process/integrations/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/integrations/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loan_process/integrations/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/integrations/tests.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loan_process/loan_process/loan_training_data.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/loan_process/loan_process/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/loan_process/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loan_process/loanapplications/management/commands/auto_score_loans.py" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/loanapplications/management/commands/auto_score_loans.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loan_process/loanapplications/management/commands/export_training_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/loanapplications/management/commands/export_training_data.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loan_process/loanapplications/management/commands/train_loan_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/loanapplications/management/commands/train_loan_model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loan_process/loanapplications/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/loanapplications/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loan_process/loanapplications/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/loanapplications/tests.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loan_process/loanapplications/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/loanapplications/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loan_process/ml_training.log" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/ml_training.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loan_process/riskdashboards/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/riskdashboards/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loan_process/riskdashboards/management/commands/customer_financial_history.py" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/riskdashboards/management/commands/customer_financial_history.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loan_process/riskdashboards/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/riskdashboards/serializers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loan_process/riskdashboards/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/riskdashboards/tests.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loan_process/riskdashboards/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/riskdashboards/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loan_process/frontend/src/compliance/ComplianceAuditTrail.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/frontend/src/compliance/ComplianceAuditTrail.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loan_process/frontend/src/compliance/ComplianceCheckUpdate.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/frontend/src/compliance/ComplianceCheckUpdate.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loan_process/frontend/src/compliance/LoanComplianceChecks.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/frontend/src/compliance/LoanComplianceChecks.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loan_process/frontend/src/compliance/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/frontend/src/compliance/api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loan_process/frontend/src/credit/AdminScoreDetail.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/frontend/src/credit/AdminScoreDetail.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loan_process/frontend/src/credit/AdminScoreList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/frontend/src/credit/AdminScoreList.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loan_process/frontend/src/credit/RescoreButton.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/frontend/src/credit/RescoreButton.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loan_process/frontend/src/credit/ScoreViewer.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/frontend/src/credit/ScoreViewer.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loan_process/frontend/src/credit/scoreApi.js" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/frontend/src/credit/scoreApi.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loan_process/frontend/src/integrations/AdminMockExperianList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/frontend/src/integrations/AdminMockExperianList.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loan_process/frontend/src/integrations/MockExperianViewer.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/frontend/src/integrations/MockExperianViewer.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loan_process/frontend/src/integrations/MockKYCViewer.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/frontend/src/integrations/MockKYCViewer.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loan_process/frontend/src/integrations/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/frontend/src/integrations/api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loan_process/frontend/src/loans/LoanDetail.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/frontend/src/loans/LoanDetail.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loan_process/frontend/src/loans/LoanDocumentUpload.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/frontend/src/loans/LoanDocumentUpload.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loan_process/frontend/src/loans/LoanSubmitForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/frontend/src/loans/LoanSubmitForm.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loan_process/frontend/src/loans/MyLoanList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/frontend/src/loans/MyLoanList.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loan_process/frontend/src/loans/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/frontend/src/loans/api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loan_process/frontend/src/risk_dashboard/ModelPerformanceLog.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/frontend/src/risk_dashboard/ModelPerformanceLog.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loan_process/frontend/src/risk_dashboard/RiskSnapshotList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/frontend/src/risk_dashboard/RiskSnapshotList.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loan_process/frontend/src/risk_dashboard/RiskTrendChart.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/frontend/src/risk_dashboard/RiskTrendChart.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loan_process/frontend/src/risk_dashboard/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/frontend/src/risk_dashboard/api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loan_process/frontend/src/users/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/frontend/src/users/api.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,36 +80,37 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenDjangoStructureViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.pycharm.django.structure.promotion.once.per.project&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;database.data.extractors.current.export.id&quot;: &quot;Comma-separated (CSV)_id&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Admin/PycharmProjects/Python-Project&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;terminal&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/home/aspl-81/.local/share/JetBrains/Toolbox/apps/pycharm/plugins/javascript-plugin/jsLanguageServicesImpl/external&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.OpenDjangoStructureViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.pycharm.django.structure.promotion.once.per.project": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "database.data.extractors.current.export.id": "Comma-separated (CSV)_id",
+    "git-widget-placeholder": "main",
+    "junie.onboarding.icon.badge.shown": "true",
+    "last_opened_file_path": "C:/Users/Admin/PycharmProjects/Python-Project",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_interpreter_path": "C:/Users/Admin/AppData/Roaming/JetBrains/PyCharm2025.1/node/versions/22.15.0/node",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "terminal",
+    "ts.external.directory.path": "/home/aspl-81/.local/share/JetBrains/Toolbox/apps/pycharm/plugins/javascript-plugin/jsLanguageServicesImpl/external",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;sqlite&quot;,
-      &quot;mysql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "sqlite",
+      "mysql"
     ]
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="Django Server.Python-Project">
     <configuration name="Automated_Loan_Processing_-_Risk_Assessment" type="Python.DjangoServer" factoryName="Django server">
       <module name="Automated_Loan_Processing_-_Risk_Assessment" />
@@ -205,7 +202,7 @@
       <workItem from="1746074258387" duration="1294000" />
       <workItem from="1746075629562" duration="265000" />
       <workItem from="1746076037215" duration="33387000" />
-      <workItem from="1746112350678" duration="4887000" />
+      <workItem from="1746112350678" duration="8536000" />
     </task>
     <task id="LOCAL-00001" summary="26/04/2025,6:33 PM">
       <option name="closed" value="true" />
@@ -455,7 +452,15 @@
       <option name="project" value="LOCAL" />
       <updated>1746096862749</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="01/05/2025,10:14 PM">
+      <option name="closed" value="true" />
+      <created>1746117862532</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1746117862532</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -465,7 +470,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/.." />
     </ignored-roots>
-    <MESSAGE value="28/04/2025,11:15 AM" />
     <MESSAGE value="28/04/2025,11:29 AM" />
     <MESSAGE value="28/04/2025,11:41 AM" />
     <MESSAGE value="28/04/2025,11:48 AM" />
@@ -490,7 +494,8 @@
     <MESSAGE value="30/04/2025,5:23 PM" />
     <MESSAGE value="30/04/2025,5:39 PM" />
     <MESSAGE value="01/05/2025,4:24 PM" />
-    <option name="LAST_COMMIT_MESSAGE" value="01/05/2025,4:24 PM" />
+    <MESSAGE value="01/05/2025,10:14 PM" />
+    <option name="LAST_COMMIT_MESSAGE" value="01/05/2025,10:14 PM" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

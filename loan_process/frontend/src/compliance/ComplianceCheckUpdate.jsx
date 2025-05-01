@@ -12,7 +12,7 @@ const ComplianceCheckUpdate = () => {
   useEffect(() => {
     const fetchCheckDetails = async () => {
       try {
-        const response = await complianceAPI.get(`compliance/check/${id}/`);
+        const response = await complianceAPI.get(`/api/compliance/check/${id}/`);
         setForm(response.data);
       } catch (err) {
         console.error('Error fetching check details:', err);
@@ -32,7 +32,7 @@ const ComplianceCheckUpdate = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      await complianceAPI.patch(`compliance/check/${id}/`, form);
+      await complianceAPI.patch(`/api/compliance/check/${id}/`, form);
       navigate(-1); // Navigate back to the previous page
     } catch (err) {
       console.error('Error updating compliance check:', err);

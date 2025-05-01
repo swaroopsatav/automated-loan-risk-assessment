@@ -1,7 +1,7 @@
 // AdminScoreDetail.jsx
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import scoreAPI from './scoreApi';
+import scoreApi from './scoreApi';
 import RescoreButton from './RescoreButton';
 
 const AdminScoreDetail = () => {
@@ -13,7 +13,7 @@ const AdminScoreDetail = () => {
   useEffect(() => {
     const fetchScoreDetail = async () => {
       try {
-        const response = await scoreAPI.get(`admin/scores/${id}/`);
+        const response = await scoreApi.get(`/api/credit/admin/scores/${id}/`);
         setScore(response.data);
       } catch (err) {
         console.error('Failed to fetch score details:', err);

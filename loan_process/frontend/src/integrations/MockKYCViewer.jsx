@@ -9,7 +9,7 @@ const MockKYCViewer = () => {
   useEffect(() => {
     const fetchKYC = async () => {
       try {
-        const response = await integrationsAPI.get('mock/kyc/');
+        const response = await integrationsAPI.get('/api/mock/kyc/');
         setKyc(response.data);
       } catch (err) {
         console.error('Failed to fetch KYC data:', err);

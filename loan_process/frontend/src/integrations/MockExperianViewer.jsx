@@ -11,7 +11,7 @@ const MockExperianViewer = () => {
   useEffect(() => {
     const fetchReport = async () => {
       try {
-        const res = await integrationsAPI.get(`mock/experian/${loanId}/`);
+        const res = await integrationsAPI.get(`/api/mock/experian/${loanId}/`);
         setReport(res.data);
       } catch (err) {
         console.error('Failed to fetch report:', err);

@@ -9,7 +9,7 @@ const RiskSnapshotList = () => {
   useEffect(() => {
     const fetchSnapshots = async () => {
       try {
-        const response = await riskAPI.get('risk/snapshots/');
+        const response = await riskAPI.get('/api/risk/snapshots/');
         setSnapshots(response.data);
       } catch (err) {
         console.error('Error fetching risk snapshots:', err);

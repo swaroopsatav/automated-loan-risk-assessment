@@ -12,7 +12,7 @@ const LoanDetail = () => {
     setLoading(true);
     const fetchLoan = async () => {
       try {
-        const response = await loanAPI.get(`/loans/${id}/`);
+        const response = await loanAPI.get(`/api/loans/${id}/`);
         const cleanLoan = {
           ...response.data,
           documents: response.data.documents || [],

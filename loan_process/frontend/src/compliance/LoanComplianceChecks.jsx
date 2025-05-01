@@ -11,7 +11,7 @@ const LoanComplianceChecks = () => {
   useEffect(() => {
     const fetchComplianceChecks = async () => {
       try {
-        const response = await complianceAPI.get(`compliance/loan/${loanId}/`);
+        const response = await complianceAPI.get(`/api/compliance/loan/${loanId}/`);
         setChecks(response.data);
       } catch (err) {
         console.error('Error fetching compliance checks:', err);

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import scoreAPI from './scoreApi';
+import scoreApi from './scoreApi';
 
 const ScoreViewer = () => {
   const { loan_id } = useParams();
@@ -11,7 +11,7 @@ const ScoreViewer = () => {
   useEffect(() => {
     const fetchScore = async () => {
       try {
-        const response = await scoreAPI.get(`score/loan/${loan_id}/`);
+        const response = await scoreApi.get(`/api/credit/loans/${loan_id}/score/`);
         setScore(response.data);
       } catch (err) {
         console.error('Failed to fetch score:', err);

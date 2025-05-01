@@ -10,7 +10,7 @@ const AdminMockExperianList = () => {
   useEffect(() => {
     const fetchReports = async () => {
       try {
-        const res = await integrationsAPI.get('mock/experian/all/');
+        const res = await integrationsAPI.get('/api/mock/experian/all/');
         setReports(res.data);
       } catch (err) {
         console.error('Failed to fetch reports:', err);

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import scoreAPI from './scoreApi';
+import scoreApi from './scoreApi';
 
 const AdminScoreList = () => {
   const [scores, setScores] = useState([]);
@@ -10,7 +10,7 @@ const AdminScoreList = () => {
   useEffect(() => {
     const fetchScores = async () => {
       try {
-        const response = await scoreAPI.get('admin/scores/');
+        const response = await scoreApi.get('/api/credit/admin/scores/');
         setScores(response.data);
       } catch (err) {
         console.error('Failed to fetch scores:', err);

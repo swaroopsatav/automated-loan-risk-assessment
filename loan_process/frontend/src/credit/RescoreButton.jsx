@@ -1,6 +1,6 @@
 // RescoreButton.jsx
 import React, { useState } from 'react';
-import scoreAPI from './scoreApi';
+import scoreApi from './scoreApi';
 
 const RescoreButton = ({ loanId }) => {
   const [msg, setMsg] = useState('');
@@ -11,7 +11,7 @@ const RescoreButton = ({ loanId }) => {
     setMsg(''); // Clear any previous message
 
     try {
-      await scoreAPI.post(`admin/rescore/${loanId}/`);
+      await scoreApi.post(`/api/credit/admin/loans/${loanId}/rescore/`);
       setMsg('✅ Loan re-scored successfully.');
     } catch (err) {
       console.error('Error rescoring loan:', err);

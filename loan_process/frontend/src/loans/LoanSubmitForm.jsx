@@ -36,7 +36,7 @@ const LoanSubmitForm = () => {
     }
 
     try {
-      await loanAPI.post('api/loans/submission/', form);
+      await loanAPI.post('/api/loans/submission/', form);
       setMessage('Loan submitted successfully.');
       setForm({
         amount_requested: '',

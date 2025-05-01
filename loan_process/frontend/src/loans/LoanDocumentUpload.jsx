@@ -28,7 +28,7 @@ const LoanDocumentUpload = ({ loanId }) => {
     data.append('file', form.file);
 
     try {
-      await loanAPI.post(`api/loans/${loanId}/documents/`, data);  // Fixed URL interpolation
+      await loanAPI.post(`/api/loans/${loanId}/documents/`, data);  // Fixed URL interpolation
       setMessage('Document uploaded successfully!');
     } catch (err) {
       console.error('Error uploading document:', err);
