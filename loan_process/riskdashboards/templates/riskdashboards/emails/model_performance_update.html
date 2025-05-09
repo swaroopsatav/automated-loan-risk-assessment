@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>ML Model Performance Update</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            background-color: #4a6fdc;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            border-radius: 5px 5px 0 0;
+        }
+        .content {
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-top: none;
+            border-radius: 0 0 5px 5px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .metric-good {
+            color: green;
+        }
+        .metric-warning {
+            color: orange;
+        }
+        .metric-bad {
+            color: red;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #777;
+            text-align: center;
+        }
+        .button {
+            display: inline-block;
+            background-color: #4a6fdc;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>ML Model Performance Update</h1>
+    </div>
+    <div class="content">
+        <p>Hello,</p>
+        
+        <p>This is an automated notification about the performance of our machine learning model.</p>
+        
+        <h2>Model Details</h2>
+        <p><strong>Model Version:</strong> {{ model_version }}</p>
+        <p><strong>Timestamp:</strong> {{ timestamp }}</p>
+        
+        <h2>Performance Metrics</h2>
+        <table>
+            <tr>
+                <th>Metric</th>
+                <th>Value</th>
+            </tr>
+            <tr>
+                <td>Accuracy</td>
+                <td>{{ accuracy|floatformat:4 }}</td>
+            </tr>
+            <tr>
+                <td>Precision</td>
+                <td>{{ precision|floatformat:4 }}</td>
+            </tr>
+            <tr>
+                <td>Recall</td>
+                <td>{{ recall|floatformat:4 }}</td>
+            </tr>
+            <tr>
+                <td>AUC Score</td>
+                <td>{{ auc_score|floatformat:4 }}</td>
+            </tr>
+            <tr>
+                <td>F1 Score</td>
+                <td>{{ f1_score|floatformat:4 }}</td>
+            </tr>
+        </table>
+        
+        {% if notes %}
+        <h2>Notes</h2>
+        <p>{{ notes }}</p>
+        {% endif %}
+        
+        <p>
+            <a href="{{ frontend_url }}/risk/models" class="button">View Dashboard</a>
+        </p>
+        
+        <p>Thank you,<br>Loan Processing System</p>
+    </div>
+    <div class="footer">
+        <p>This is an automated message. Please do not reply to this email.</p>
+    </div>
+</body>
+</html>

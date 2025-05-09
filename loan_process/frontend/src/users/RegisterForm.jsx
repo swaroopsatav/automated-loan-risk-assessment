@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import API from './api.js';
 import {useNavigate} from 'react-router-dom';
+import OAuthButtons from './OAuthButtons';
 
 const RegisterForm = () => {
     const navigate = useNavigate();
@@ -68,8 +69,27 @@ const RegisterForm = () => {
         if (formData.password !== formData.password2) {
             newErrors.password2 = 'Passwords do not match';
         }
+
+        // Enhanced password validation
+        const passwordErrors = [];
         if (formData.password.length < 8) {
-            newErrors.password = 'Password must be at least 8 characters';
+            passwordErrors.push('Password must be at least 8 characters');
+        }
+        if (!/[A-Z]/.test(formData.password)) {
+            passwordErrors.push('Password must contain at least one uppercase letter');
+        }
+        if (!/[a-z]/.test(formData.password)) {
+            passwordErrors.push('Password must contain at least one lowercase letter');
+        }
+        if (!/[0-9]/.test(formData.password)) {
+            passwordErrors.push('Password must contain at least one number');
+        }
+        if (!/[^A-Za-z0-9]/.test(formData.password)) {
+            passwordErrors.push('Password must contain at least one special character');
+        }
+
+        if (passwordErrors.length > 0) {
+            newErrors.password = passwordErrors.join(', ');
         }
 
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -170,6 +190,14 @@ const RegisterForm = () => {
                     {message}
                 </div>
             )}
+
+            <OAuthButtons />
+
+            <div className="my-6 flex items-center justify-center">
+                <div className="flex-grow border-t border-gray-300"></div>
+                <span className="mx-4 text-gray-500">or register with email</span>
+                <div className="flex-grow border-t border-gray-300"></div>
+            </div>
 
             {renderInput('Username', 'username', 'text', 'Enter username', true)}
             {renderInput('Email', 'email', 'email', 'Enter email', true)}

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import API from './api';
 
 const Profile = () => {
@@ -49,7 +50,17 @@ const Profile = () => {
 
     return (
         <div className="p-4 max-w-xl mx-auto">
-            <h2 className="text-xl font-bold">My Profile</h2>
+            <div className="flex justify-between items-center mb-4">
+                <h2 className="text-xl font-bold">My Profile</h2>
+                {profile && (
+                    <Link 
+                        to="/profile/edit" 
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    >
+                        Edit Profile
+                    </Link>
+                )}
+            </div>
             {profile ? (
                 <form className="mt-4 space-y-4">
                     {renderField('Username', profile.username)}

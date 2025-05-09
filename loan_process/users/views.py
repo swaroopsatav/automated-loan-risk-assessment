@@ -2,6 +2,7 @@ from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.exceptions import NotFound, ValidationError
+from loan_process.throttling import AuthRateThrottle, BurstRateThrottle, SensitiveEndpointThrottle
 from .models import CustomUser
 from .serializers import (
     UserSerializer,
@@ -24,6 +25,7 @@ class RegisterUserView(generics.CreateAPIView):
     """
     serializer_class = UserRegistrationSerializer
     permission_classes = [permissions.AllowAny]
+    throttle_classes = [BurstRateThrottle, AuthRateThrottle]
 
     def create(self, request, *args, **kwargs):
         # Call the parent's `create` method to perform the registration logic
@@ -54,6 +56,7 @@ class LoginView(APIView):
     """
     serializer_class = UserSerializer
     permission_classes = [permissions.AllowAny]
+    throttle_classes = [AuthRateThrottle]
 
     def post(self, request):
         username = request.data.get("username", "").strip()
@@ -113,6 +116,7 @@ class UserProfileView(generics.RetrieveUpdateAPIView):
     """
     serializer_class = UserProfileSerializer
     permission_classes = [permissions.IsAuthenticated]
+    throttle_classes = [SensitiveEndpointThrottle]
 
     def get_object(self):
         return self.request.user

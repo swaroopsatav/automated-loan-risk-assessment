@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.utils import timezone
 from .models import LoanApplication, LoanDocument
+from .utils.email_utils import send_loan_status_update_email
 
 
 class LoanDocumentInline(admin.TabularInline):
@@ -55,11 +56,31 @@ class LoanApplicationAdmin(admin.ModelAdmin):
     highlight_risk.short_description = "Risk Assessment"
 
     def approve_loans(self, request, queryset):
-        updated = queryset.filter(status='pending').update(
+        # Get the loans that will be updated
+        loans_to_update = queryset.filter(status='pending')
+
+        # Store the IDs before updating
+        loan_ids = list(loans_to_update.values_list('id', flat=True))
+
+        # Update the loans
+        updated = loans_to_update.update(
             status='approved',
             reviewed_at=timezone.now()
         )
+
         if updated:
+            # Send email notifications
+            for loan_id in loan_ids:
+                try:
+                    loan = LoanApplication.objects.get(id=loan_id)
+                    send_loan_status_update_email(loan)
+                except Exception as e:
+                    self.message_user(
+                        request, 
+                        f"Error sending email for loan #{loan_id}: {str(e)}", 
+                        level='ERROR'
+                    )
+
             self.message_user(request, f"{updated} loan application(s) approved successfully.")
         else:
             self.message_user(request, "No eligible loans found for approval.", level='WARNING')
@@ -67,11 +88,31 @@ class LoanApplicationAdmin(admin.ModelAdmin):
     approve_loans.short_description = "Approve selected loans"
 
     def reject_loans(self, request, queryset):
-        updated = queryset.filter(status='pending').update(
+        # Get the loans that will be updated
+        loans_to_update = queryset.filter(status='pending')
+
+        # Store the IDs before updating
+        loan_ids = list(loans_to_update.values_list('id', flat=True))
+
+        # Update the loans
+        updated = loans_to_update.update(
             status='rejected',
             reviewed_at=timezone.now()
         )
+
         if updated:
+            # Send email notifications
+            for loan_id in loan_ids:
+                try:
+                    loan = LoanApplication.objects.get(id=loan_id)
+                    send_loan_status_update_email(loan)
+                except Exception as e:
+                    self.message_user(
+                        request, 
+                        f"Error sending email for loan #{loan_id}: {str(e)}", 
+                        level='ERROR'
+                    )
+
             self.message_user(request, f"{updated} loan application(s) rejected.")
         else:
             self.message_user(request, "No eligible loans found for rejection.", level='WARNING')

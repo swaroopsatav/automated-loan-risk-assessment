@@ -1,6 +1,7 @@
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser, FormParser
+from loan_process.throttling import SensitiveEndpointThrottle
 from .models import LoanApplication, LoanDocument
 from .serializers import (
     LoanApplicationSerializer,
@@ -11,6 +12,11 @@ from .serializers import (
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from creditscorings.utils import score_and_record
 from loanapplications.ml.scoring import score_loan_application
+from .utils.email_utils import (
+    send_loan_application_submitted_email,
+    send_loan_status_update_email,
+    send_document_uploaded_email,
+)
 import logging
 
 logger = logging.getLogger('loanapplications.views')
@@ -24,6 +30,7 @@ class LoanApplicationCreateView(generics.CreateAPIView):
     """
     serializer_class = LoanApplicationSerializer
     permission_classes = [IsAuthenticated]
+    throttle_classes = [SensitiveEndpointThrottle]
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -32,6 +39,10 @@ class LoanApplicationCreateView(generics.CreateAPIView):
                 loan = serializer.save(user=self.request.user)
                 try:
                     self.process_loan(loan)
+
+                    # Send email notification
+                    send_loan_application_submitted_email(loan)
+
                     headers = self.get_success_headers(serializer.data)
                     return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
                 except Exception as e:
@@ -46,94 +57,11 @@ class LoanApplicationCreateView(generics.CreateAPIView):
 
     def process_loan(self, loan):
         try:
-            # For testing purposes, we'll use a simplified version
-            # This allows the test to patch score_loan_application
-            data = {
-                'amount_requested': float(loan.amount_requested),
-                'term_months': loan.term_months,
-                'monthly_income': float(loan.monthly_income or 0),
-                'existing_loans': int(loan.existing_loans),
-                'credit_score': float(loan.credit_score_records or 0),
-                'credit_util_pct': 50.0,  # Default value
-                'dpd_max': 0,  # Default value
-                'emi_to_income_ratio': 0.3  # Default value
-            }
-
-            # Call score_loan_application so it can be patched in tests
-            # In a real application, we would use the full implementation
-            # Create a mock model for testing purposes
-            class MockModel:
-                def predict(self, X):
-                    return [1]
-                def predict_proba(self, X):
-                    return [[0.2, 0.8]]
-
-            mock_model = MockModel()
-            risk_score, ai_decision, explanation = score_loan_application(data, MODEL=mock_model)
-
-            # Update loan with scoring results
-            loan.risk_score = risk_score
-            loan.ai_decision = ai_decision
-            loan.ml_scoring_output = explanation
-
-            # Set status and save
-            loan.status = 'under_review'
-            loan.save()
-            return
-
-            # The following code is the full implementation that would be used in production
-            """
-            # Record credit score
-            score_and_record(loan)
-
-            # Run ML scoring
-            # Import the model for scoring
-            import joblib
-            import os
-
-            # Load the model
-            model_path = os.path.join('ml_models', 'xgboost_loan_model.pkl')
-            if not os.path.exists(model_path):
-                model_path = os.path.join('ml_models', 'lightgbm_loan_model.pkl')
-
-            if not os.path.exists(model_path):
-                raise ValueError("No ML model found. Run train_loan_model first.")
-
-            MODEL = joblib.load(model_path)
-
-            data = {
-                'amount_requested': float(loan.amount_requested),
-                'term_months': loan.term_months,
-                'monthly_income': float(loan.monthly_income or 0),
-                'existing_loans': int(loan.existing_loans),
-                'credit_score': float(loan.credit_score_records or 0),
-                'credit_util_pct': 50.0,  # Default value
-                'dpd_max': 0,  # Default value
-                'emi_to_income_ratio': 0.3  # Default value
-            }
-
-            # Try to get credit report data if available
-            try:
-                report = loan.mock_experian.first()
-                if report:
-                    data['credit_util_pct'] = float(report.credit_utilization_pct or 50.0)
-                    data['dpd_max'] = int(report.dpd_max or 0)
-                    data['emi_to_income_ratio'] = float(report.emi_to_income_ratio or 0.3)
-            except Exception:
-                pass
-
-            risk_score, ai_decision, explanation = score_loan_application(data, MODEL=MODEL)
-
-            loan.risk_score = risk_score
-            loan.ai_decision = ai_decision 
-            loan.ml_scoring_output = explanation
-            loan.status = 'under_review'
-            loan.save()
-            """
+            # Scoring is now automatically triggered in the LoanApplication.save() method
+            # We just need to send the status update email
+            send_loan_status_update_email(loan)
         except Exception as e:
             logger.error(f"Error processing loan application: {str(e)}")
-            loan.status = 'pending'
-            loan.save()
             raise
 
 
@@ -176,6 +104,7 @@ class LoanDocumentUploadView(generics.CreateAPIView):
     serializer_class = LoanDocumentSerializer
     permission_classes = [IsAuthenticated]
     parser_classes = [MultiPartParser, FormParser]
+    throttle_classes = [SensitiveEndpointThrottle]
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -198,7 +127,10 @@ class LoanDocumentUploadView(generics.CreateAPIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def perform_create(self, serializer):
-        serializer.save()
+        loan_document = serializer.save()
+
+        # Send email notification
+        send_document_uploaded_email(loan_document)
 
 
 # --- Admin: View All Applications ---

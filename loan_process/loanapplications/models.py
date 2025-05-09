@@ -2,6 +2,7 @@ from django.db import models
 from users.models import CustomUser
 from django.core.validators import MinValueValidator
 from django.core.exceptions import ValidationError
+from .utils.encryption_utils import EncryptedFileStorage
 
 
 def loan_doc_upload_path(instance, filename):
@@ -87,8 +88,23 @@ class LoanApplication(models.Model):
             raise ValidationError({"credit_score_records": ["Credit score must be between 300 and 850"]})
 
     def save(self, *args, **kwargs):
+        is_new = self.pk is None
         self.clean()
         super().save(*args, **kwargs)
+
+        # Auto-trigger scoring on new loan submission
+        if is_new and self.status == 'pending':
+            try:
+                from creditscorings.utils import score_and_record
+                score_and_record(self)
+                # Update status to under_review after scoring
+                self.status = 'under_review'
+                super().save(update_fields=['status'])
+            except Exception as e:
+                import logging
+                logger = logging.getLogger('loanapplications.models')
+                logger.error(f"Error auto-scoring loan #{self.id}: {str(e)}")
+                # Don't raise the exception to avoid breaking the save process
 
     def completion_percentage(self):
         """
@@ -151,7 +167,10 @@ class LoanDocument(models.Model):
         max_length=100,
         choices=DOCUMENT_TYPE_CHOICES
     )
-    file = models.FileField(upload_to=loan_doc_upload_path)
+    file = models.FileField(
+        upload_to=loan_doc_upload_path,
+        storage=EncryptedFileStorage()
+    )
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:

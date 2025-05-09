@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>ALERT: ML Model Performance Below Threshold</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            background-color: #e74c3c;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            border-radius: 5px 5px 0 0;
+        }
+        .content {
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-top: none;
+            border-radius: 0 0 5px 5px;
+        }
+        .alert-box {
+            background-color: #ffebee;
+            border-left: 4px solid #e74c3c;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .metric-highlight {
+            font-weight: bold;
+            color: #e74c3c;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #777;
+            text-align: center;
+        }
+        .button {
+            display: inline-block;
+            background-color: #4a6fdc;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>ALERT: ML Model Performance Below Threshold</h1>
+    </div>
+    <div class="content">
+        <p>Hello,</p>
+        
+        <div class="alert-box">
+            <p><strong>ALERT:</strong> The performance of model <strong>{{ model_version }}</strong> has fallen below the defined threshold.</p>
+            <p>
+                <strong>Metric:</strong> {{ threshold_metric|title }}<br>
+                <strong>Threshold:</strong> {{ threshold_value|floatformat:4 }}<br>
+                <strong>Actual Value:</strong> <span class="metric-highlight">{{ actual_value|floatformat:4 }}</span>
+            </p>
+        </div>
+        
+        <h2>Model Details</h2>
+        <p><strong>Model Version:</strong> {{ model_version }}</p>
+        <p><strong>Timestamp:</strong> {{ timestamp }}</p>
+        
+        <h2>All Performance Metrics</h2>
+        <table>
+            <tr>
+                <th>Metric</th>
+                <th>Value</th>
+            </tr>
+            <tr {% if threshold_metric == 'accuracy' %}class="metric-highlight"{% endif %}>
+                <td>Accuracy</td>
+                <td>{{ accuracy|floatformat:4 }}</td>
+            </tr>
+            <tr {% if threshold_metric == 'precision' %}class="metric-highlight"{% endif %}>
+                <td>Precision</td>
+                <td>{{ precision|floatformat:4 }}</td>
+            </tr>
+            <tr {% if threshold_metric == 'recall' %}class="metric-highlight"{% endif %}>
+                <td>Recall</td>
+                <td>{{ recall|floatformat:4 }}</td>
+            </tr>
+            <tr {% if threshold_metric == 'auc_score' %}class="metric-highlight"{% endif %}>
+                <td>AUC Score</td>
+                <td>{{ auc_score|floatformat:4 }}</td>
+            </tr>
+            <tr {% if threshold_metric == 'f1_score' %}class="metric-highlight"{% endif %}>
+                <td>F1 Score</td>
+                <td>{{ f1_score|floatformat:4 }}</td>
+            </tr>
+        </table>
+        
+        {% if notes %}
+        <h2>Notes</h2>
+        <p>{{ notes }}</p>
+        {% endif %}
+        
+        <p><strong>Recommended Action:</strong> Please review the model performance and consider retraining or adjusting the model.</p>
+        
+        <p>
+            <a href="{{ frontend_url }}/risk/models" class="button">View Dashboard</a>
+        </p>
+        
+        <p>Thank you,<br>Loan Processing System</p>
+    </div>
+    <div class="footer">
+        <p>This is an automated message. Please do not reply to this email.</p>
+    </div>
+</body>
+</html>

@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import {loginUser} from './auth';
-import {useNavigate} from 'react-router-dom';
+import {useNavigate, Link} from 'react-router-dom';
 import {AUTH_CONFIG} from '../config';
+import OAuthButtons from './OAuthButtons';
 
 const LoginForm = () => {
     const [form, setForm] = useState({username: '', password: ''});
@@ -91,6 +92,23 @@ const LoginForm = () => {
             >
                 {isLoading ? 'Logging in...' : 'Login'}
             </button>
+
+            <div className="mt-4 text-center">
+                <Link 
+                    to="/forgot-password" 
+                    className="text-blue-500 hover:text-blue-700 transition duration-300"
+                >
+                    Forgot Password?
+                </Link>
+            </div>
+
+            <div className="my-6 flex items-center justify-center">
+                <div className="flex-grow border-t border-gray-300"></div>
+                <span className="mx-4 text-gray-500">or</span>
+                <div className="flex-grow border-t border-gray-300"></div>
+            </div>
+
+            <OAuthButtons className="mt-4" />
         </form>
     );
 };

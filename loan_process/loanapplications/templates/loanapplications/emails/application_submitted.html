@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Loan Application Received</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px 5px 0 0;
+        }
+        .content {
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-top: none;
+            border-radius: 0 0 5px 5px;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #777;
+            text-align: center;
+        }
+        .details {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+        .details table {
+            width: 100%;
+        }
+        .details td {
+            padding: 5px 10px;
+        }
+        .details tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .button {
+            display: inline-block;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h2>Loan Application Received</h2>
+    </div>
+    <div class="content">
+        <p>Dear {{ user.get_full_name|default:user.username }},</p>
+
+        <p>Thank you for submitting your loan application. We have received your request and it is now being processed.</p>
+
+        <div class="details">
+            <h3>Application Details:</h3>
+            <table>
+                <tr>
+                    <td><strong>Application ID:</strong></td>
+                    <td>#{{ loan_id }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Amount Requested:</strong></td>
+                    <td>${{ amount }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Purpose:</strong></td>
+                    <td>{{ purpose }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Term:</strong></td>
+                    <td>{{ term_months }} months</td>
+                </tr>
+                <tr>
+                    <td><strong>Submitted On:</strong></td>
+                    <td>{{ submitted_at|date:"F j, Y, g:i a" }}</td>
+                </tr>
+            </table>
+        </div>
+
+        <p>What happens next?</p>
+        <ol>
+            <li>Our system will perform an initial review of your application</li>
+            <li>You may be asked to provide additional documentation</li>
+            <li>Once all required information is received, a final decision will be made</li>
+            <li>You will be notified by email when your application status changes</li>
+        </ol>
+
+        <p>You can check the status of your application at any time by logging into your account.</p>
+
+        <a href="{{ frontend_url }}/loans/{{ loan_id }}" class="button">View Application</a>
+
+        <p>If you have any questions, please don't hesitate to contact our customer support team.</p>
+
+        <p>Best regards,<br>
+        The Loan Processing Team</p>
+    </div>
+    <div class="footer">
+        <p>This is an automated message. Please do not reply to this email.</p>
+        <p>&copy; 2023 Loan Processing System. All rights reserved.</p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Document Uploaded for Loan Application</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            background-color: #673AB7;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px 5px 0 0;
+        }
+        .content {
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-top: none;
+            border-radius: 0 0 5px 5px;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #777;
+            text-align: center;
+        }
+        .details {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+        .details table {
+            width: 100%;
+        }
+        .details td {
+            padding: 5px 10px;
+        }
+        .details tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .button {
+            display: inline-block;
+            background-color: #673AB7;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 15px;
+        }
+        .highlight {
+            font-size: 16px;
+            color: #673AB7;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h2>Document Uploaded Successfully</h2>
+    </div>
+    <div class="content">
+        <p>Dear {{ user.get_full_name|default:user.username }},</p>
+        
+        <p class="highlight">We have received your document upload for loan application #{{ loan_id }}.</p>
+        
+        <div class="details">
+            <h3>Document Details:</h3>
+            <table>
+                <tr>
+                    <td><strong>Application ID:</strong></td>
+                    <td>#{{ loan_id }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Document Type:</strong></td>
+                    <td>{{ document_type_display }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Uploaded On:</strong></td>
+                    <td>{{ uploaded_at|date:"F j, Y, g:i a" }}</td>
+                </tr>
+            </table>
+        </div>
+        
+        <p>Your document has been successfully uploaded and will be reviewed as part of your loan application process.</p>
+        
+        <p>You can view your application and check which documents are still required by logging into your account.</p>
+        
+        <a href="http://localhost:5173/loans/{{ loan_id }}" class="button">View Application</a>
+        
+        <p>If you have any questions or need assistance with uploading additional documents, please contact our customer support team.</p>
+        
+        <p>Best regards,<br>
+        The Loan Processing Team</p>
+    </div>
+    <div class="footer">
+        <p>This is an automated message. Please do not reply to this email.</p>
+        <p>&copy; 2023 Loan Processing System. All rights reserved.</p>
+    </div>
+</body>
+</html>

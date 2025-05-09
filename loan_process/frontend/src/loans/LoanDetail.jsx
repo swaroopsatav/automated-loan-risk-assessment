@@ -89,6 +89,7 @@ const LoanDetail = () => {
         )}
       </div>
     </div>
+
   );
 };
 

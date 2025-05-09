@@ -4,9 +4,14 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 // Importing user-related components
 import RegisterForm from './users/RegisterForm';
 import LoginForm from './users/LoginForm';
+import ForgotPassword from './users/ForgotPassword';
+import ResetPassword from './users/ResetPassword';
 import Profile from './users/Profile';
+import ProfileEditForm from './users/ProfileEditForm';
+import Home from './users/Home';
 import Navbar from './users/Navbar';
 import PrivateRoute from './users/PrivateRoute';
+import OAuthCallback from './users/OAuthCallback';
 
 // Importing loan-related components
 import LoanSubmitForm from './loans/LoanSubmitForm';
@@ -44,13 +49,17 @@ const App = () => {
       {/* Main content section */}
       <div className="min-h-screen bg-gray-100 p-4">
         <Routes>
-          {/* Home route - redirects based on authentication status */}
-          <Route path="/" element={<PrivateRoute><Navigate to="/profile" replace /></PrivateRoute>} />
+          {/* Home route - shows dashboard for authenticated users */}
+          <Route path="/" element={<PrivateRoute><Home /></PrivateRoute>} />
 
           {/* User routes */}
           <Route path="/register" element={<RegisterForm />} />
           <Route path="/login" element={<LoginForm />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/auth/:provider/callback" element={<OAuthCallback />} />
           <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
+          <Route path="/profile/edit" element={<PrivateRoute><ProfileEditForm /></PrivateRoute>} />
 
           {/* Loan routes */}
           <Route path="/loans/apply" element={<PrivateRoute><LoanSubmitForm /></PrivateRoute>} />

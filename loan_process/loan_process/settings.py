@@ -156,7 +156,21 @@ MEDIA_ROOT = BASE_DIR / 'media'
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
+    ),
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.AnonRateThrottle',
+        'rest_framework.throttling.UserRateThrottle',
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': '20/minute',
+        'user': '100/minute',
+        'burst': '10/minute',
+        'sustained': '100/day',
+        'auth': '5/minute',
+        'user_burst': '30/minute',
+        'user_sustained': '1000/day',
+        'sensitive': '10/hour',
+    }
 }
 
 # JWT settings
@@ -173,3 +187,17 @@ CORS_ALLOWED_ORIGINS = [
     'http://localhost:5173',  # Frontend development server
     'http://127.0.0.1:5173',  # Alternative localhost address
 ]
+
+# Email Configuration
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # For development - prints to console
+# For production, use the following:
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_USER = 'your-email@gmail.com'
+# EMAIL_HOST_PASSWORD = 'your-app-password'
+DEFAULT_FROM_EMAIL = 'Loan Processing System <noreply@loanprocessing.com>'
+
+# Frontend URL for links in emails
+FRONTEND_URL = 'http://localhost:5173'  # Change this in production

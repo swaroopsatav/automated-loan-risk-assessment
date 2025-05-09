@@ -4,6 +4,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator, RegexVa
 from django.utils.timezone import now
 import os
 import logging
+from loanapplications.utils.encryption_utils import EncryptedFileStorage
 
 logger = logging.getLogger(__name__)
 
@@ -98,18 +99,21 @@ class CustomUser(AbstractUser):
     # --- Document Uploads ---
     id_proof = models.FileField(
         upload_to=user_document_upload_path,
+        storage=EncryptedFileStorage(),
         blank=True,
         null=True,
         help_text="Upload government issued photo ID"
     )
     address_proof = models.FileField(
         upload_to=user_document_upload_path,
+        storage=EncryptedFileStorage(),
         blank=True,
         null=True,
         help_text="Upload proof of current residential address"
     )
     income_proof = models.FileField(
         upload_to=user_document_upload_path,
+        storage=EncryptedFileStorage(),
         blank=True,
         null=True,
         help_text="Upload latest salary slip or tax returns"
