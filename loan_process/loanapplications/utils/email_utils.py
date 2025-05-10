@@ -5,11 +5,12 @@ from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.conf import settings
 from django.utils.html import strip_tags
+from asgiref.sync import sync_to_async
 import logging
 
 logger = logging.getLogger('loanapplications.email')
 
-def send_loan_application_submitted_email(loan_application):
+async def send_loan_application_submitted_email(loan_application):
     """
     Send an email notification to the user when their loan application is submitted.
 
@@ -34,8 +35,8 @@ def send_loan_application_submitted_email(loan_application):
         html_message = render_to_string('loanapplications/emails/application_submitted.html', context)
         plain_message = strip_tags(html_message)
 
-        # Send email
-        send_mail(
+        # Send email asynchronously
+        await sync_to_async(send_mail)(
             subject=subject,
             message=plain_message,
             from_email=settings.DEFAULT_FROM_EMAIL,
@@ -50,7 +51,7 @@ def send_loan_application_submitted_email(loan_application):
         logger.error(f"Failed to send application submitted email: {str(e)}")
         return False
 
-def send_loan_status_update_email(loan_application):
+async def send_loan_status_update_email(loan_application):
     """
     Send an email notification to the user when their loan application status changes.
 
@@ -79,8 +80,8 @@ def send_loan_status_update_email(loan_application):
         html_message = render_to_string(template_name, context)
         plain_message = strip_tags(html_message)
 
-        # Send email
-        send_mail(
+        # Send email asynchronously
+        await sync_to_async(send_mail)(
             subject=subject,
             message=plain_message,
             from_email=settings.DEFAULT_FROM_EMAIL,
@@ -95,7 +96,7 @@ def send_loan_status_update_email(loan_application):
         logger.error(f"Failed to send status update email: {str(e)}")
         return False
 
-def send_document_uploaded_email(loan_document):
+async def send_document_uploaded_email(loan_document):
     """
     Send an email notification to the user when they upload a document for their loan application.
 
@@ -124,8 +125,8 @@ def send_document_uploaded_email(loan_document):
         html_message = render_to_string('loanapplications/emails/document_uploaded.html', context)
         plain_message = strip_tags(html_message)
 
-        # Send email
-        send_mail(
+        # Send email asynchronously
+        await sync_to_async(send_mail)(
             subject=subject,
             message=plain_message,
             from_email=settings.DEFAULT_FROM_EMAIL,

@@ -1,9 +1,10 @@
 from creditscorings.models import CreditScoreRecord
 from django.db import transaction
 from loanapplications.ml.scoring import score_loan_application
+from asgiref.sync import sync_to_async
 
 
-def score_and_record(loan_application):
+async def score_and_record(loan_application):
     """
     Run ML scoring on a loan application and save both the result and a record.
 
@@ -124,26 +125,32 @@ def score_and_record(loan_application):
 
     # Save the scoring result to CreditScoreRecord and update LoanApplication
     try:
-        with transaction.atomic():
-            # Create the credit score record
-            # If we're in the saving failure test, this will use the mocked create method
-            credit_score_record = CreditScoreRecord.objects.create(
-                user=user,
-                loan_application=loan_application,
-                model_name='xgboost_v1',
-                risk_score=risk_score,
-                decision=decision,
-                scoring_inputs=model_inputs,
-                scoring_output=explanation,
-            )
+        # Define a synchronous function to perform the database operations
+        @sync_to_async
+        def save_results():
+            with transaction.atomic():
+                # Create the credit score record
+                # If we're in the saving failure test, this will use the mocked create method
+                credit_score_record = CreditScoreRecord.objects.create(
+                    user=user,
+                    loan_application=loan_application,
+                    model_name='xgboost_v1',
+                    risk_score=risk_score,
+                    decision=decision,
+                    scoring_inputs=model_inputs,
+                    scoring_output=explanation,
+                )
 
-            # Update LoanApplication directly
-            loan_application.risk_score = risk_score
-            loan_application.ai_decision = decision
-            loan_application.ml_scoring_output = explanation
-            loan_application.save()
+                # Update LoanApplication directly
+                loan_application.risk_score = risk_score
+                loan_application.ai_decision = decision
+                loan_application.ml_scoring_output = explanation
+                loan_application.save()
 
-            return credit_score_record
+                return credit_score_record
+
+        # Call the synchronous function asynchronously
+        return await save_results()
 
     except Exception as e:
         # Raise with a consistent error message format

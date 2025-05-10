@@ -4,6 +4,7 @@ from django.contrib import messages
 import csv
 from creditscorings.models import CreditScoreRecord
 from creditscorings.utils import score_and_record
+from asgiref.sync import async_to_sync
 
 
 @admin.action(description="Export selected to CSV")
@@ -40,7 +41,7 @@ def rescore_selected(modeladmin, request, queryset):
             loan = record.loan_application
             if loan:
                 record.delete()
-                score_and_record(loan)
+                async_to_sync(score_and_record)(loan)
                 success_count += 1
             else:
                 error_count += 1

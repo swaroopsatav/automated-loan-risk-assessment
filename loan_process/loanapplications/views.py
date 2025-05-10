@@ -17,6 +17,7 @@ from .utils.email_utils import (
     send_loan_status_update_email,
     send_document_uploaded_email,
 )
+from asgiref.sync import async_to_sync
 import logging
 
 logger = logging.getLogger('loanapplications.views')
@@ -41,7 +42,7 @@ class LoanApplicationCreateView(generics.CreateAPIView):
                     self.process_loan(loan)
 
                     # Send email notification
-                    send_loan_application_submitted_email(loan)
+                    async_to_sync(send_loan_application_submitted_email)(loan)
 
                     headers = self.get_success_headers(serializer.data)
                     return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
@@ -59,7 +60,7 @@ class LoanApplicationCreateView(generics.CreateAPIView):
         try:
             # Scoring is now automatically triggered in the LoanApplication.save() method
             # We just need to send the status update email
-            send_loan_status_update_email(loan)
+            async_to_sync(send_loan_status_update_email)(loan)
         except Exception as e:
             logger.error(f"Error processing loan application: {str(e)}")
             raise
@@ -130,7 +131,7 @@ class LoanDocumentUploadView(generics.CreateAPIView):
         loan_document = serializer.save()
 
         # Send email notification
-        send_document_uploaded_email(loan_document)
+        async_to_sync(send_document_uploaded_email)(loan_document)
 
 
 # --- Admin: View All Applications ---

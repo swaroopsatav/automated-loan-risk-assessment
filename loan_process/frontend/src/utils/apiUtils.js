@@ -2,8 +2,8 @@
 import axios from 'axios';
 import { API_CONFIG, AUTH_CONFIG } from '../config';
 
-// Create a function to create an API instance with standardized configuration
-export const createApiInstance = (customConfig = {}) => {
+// Create a shared API instance with standardized configuration
+const createSharedApiInstance = (customConfig = {}) => {
   const instance = axios.create({
     baseURL: API_CONFIG.baseURL,
     headers: API_CONFIG.headers,
@@ -13,19 +13,29 @@ export const createApiInstance = (customConfig = {}) => {
 
   // Flag to prevent multiple refresh calls
   let isRefreshing = false;
+  let refreshPromise = null;
 
   // Function to refresh the access token
   const refreshAccessToken = async () => {
     try {
+      // If already refreshing, return the existing promise
+      if (refreshPromise) {
+        return await refreshPromise;
+      }
+
       const refreshToken = localStorage.getItem('refresh');
       if (!refreshToken) {
         throw new Error('No refresh token available');
       }
 
-      // Call refresh endpoint
-      const response = await axios.post(`${API_CONFIG.baseURL}/api/token/refresh/`, {
+      // Create a new refresh promise
+      refreshPromise = axios.post(`${API_CONFIG.baseURL}/api/token/refresh/`, {
         refresh: refreshToken,
       });
+
+      // Call refresh endpoint
+      const response = await refreshPromise;
+      refreshPromise = null;
 
       const { access } = response.data;
       localStorage.setItem('access', access);
@@ -36,8 +46,11 @@ export const createApiInstance = (customConfig = {}) => {
       // Clear tokens and redirect
       localStorage.removeItem('access');
       localStorage.removeItem('refresh');
+      window.dispatchEvent(new Event('loginStateChanged')); // Trigger login state update
       window.location.href = AUTH_CONFIG.loginRedirectUrl;
       throw error;
+    } finally {
+      refreshPromise = null;
     }
   };
 
@@ -55,10 +68,21 @@ export const createApiInstance = (customConfig = {}) => {
           const tokenExpiry = payload.exp * 1000;
           const currentTime = Date.now();
 
-          if (currentTime + AUTH_CONFIG.tokenExpiryBuffer >= tokenExpiry && !isRefreshing) {
-            isRefreshing = true;
-            token = await refreshAccessToken();
-            isRefreshing = false;
+          if (currentTime + AUTH_CONFIG.tokenExpiryBuffer >= tokenExpiry) {
+            if (!isRefreshing) {
+              isRefreshing = true;
+              try {
+                token = await refreshAccessToken();
+              } finally {
+                isRefreshing = false;
+              }
+            } else {
+              // Wait for the current refresh to complete
+              while (isRefreshing) {
+                await new Promise(resolve => setTimeout(resolve, 100));
+              }
+              token = localStorage.getItem('access');
+            }
           }
 
           config.headers.Authorization = `Bearer ${token}`;
@@ -91,7 +115,10 @@ export const createApiInstance = (customConfig = {}) => {
   return instance;
 };
 
-// Create a default API instance
-const API = createApiInstance();
+// Create a function to create a new API instance each time it's called
+// This ensures each module gets its own instance for better synchronization
+export const createApiInstance = (customConfig = {}) => createSharedApiInstance(customConfig);
 
-export default API;
+// Create a default instance for backward compatibility
+const defaultAPI = createSharedApiInstance();
+export default defaultAPI;

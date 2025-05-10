@@ -272,6 +272,7 @@ from django.test import TestCase
 from unittest.mock import patch, MagicMock
 from creditscorings.models import CreditScoreRecord, CustomUser, LoanApplication
 from creditscorings.utils import score_and_record
+from asgiref.sync import async_to_sync
 
 
 class TestScoreAndRecord(TestCase):
@@ -288,7 +289,7 @@ class TestScoreAndRecord(TestCase):
 
     def test_score_and_record_success(self):
         # Call the function with the loan application
-        credit_score_record = score_and_record(self.loan_application)
+        credit_score_record = async_to_sync(score_and_record)(self.loan_application)
 
         # Assert that a CreditScoreRecord is created
         self.assertIsInstance(credit_score_record, CreditScoreRecord)
@@ -308,7 +309,7 @@ class TestScoreAndRecord(TestCase):
 
         # Call the function and expect ValueError
         with self.assertRaises(ValueError) as context:
-            score_and_record(self.loan_application)
+            async_to_sync(score_and_record)(self.loan_application)
         self.assertIn("Required field amount_requested is missing or invalid", str(context.exception))
 
     @patch('creditscorings.utils.score_loan_application')
@@ -334,7 +335,7 @@ class TestScoreAndRecord(TestCase):
 
         # Call the function and expect Exception
         with self.assertRaises(Exception) as context:
-            score_and_record(self.loan_application)
+            async_to_sync(score_and_record)(self.loan_application)
         self.assertIn("Error during ML scoring", str(context.exception))
 
     @patch('loanapplications.ml.scoring.score_loan_application')
@@ -348,7 +349,7 @@ class TestScoreAndRecord(TestCase):
 
         # Call the function and expect Exception
         with self.assertRaises(Exception) as context:
-            score_and_record(self.loan_application)
+            async_to_sync(score_and_record)(self.loan_application)
         # Check that the error message contains the database error
         self.assertIn("Error saving scoring results", str(context.exception))
         self.assertIn("Database error", str(context.exception))

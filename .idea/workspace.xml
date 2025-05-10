@@ -5,10 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3109a877-066b-4d3c-ac92-9e8a24b67d04" name="Changes" comment="30/04/2025,6:29 PM">
-      <change afterPath="$PROJECT_DIR$/.idea/Loan Approval.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loan_process/creditscorings/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/creditscorings/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loan_process/creditscorings/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/creditscorings/tests.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loan_process/creditscorings/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/creditscorings/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loan_process/creditscorings/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/creditscorings/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loan_process/frontend/src/utils/apiUtils.js" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/frontend/src/utils/apiUtils.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loan_process/loanapplications/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/loanapplications/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loan_process/loanapplications/utils/email_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/loanapplications/utils/email_utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loan_process/loanapplications/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/loan_process/loanapplications/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,7 +53,7 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/swaroopsatav/Python-Project.git&quot;,
-    &quot;accountId&quot;: &quot;b27bc6ae-76a0-4410-bfd5-d8d0db4769f0&quot;
+    &quot;accountId&quot;: &quot;00a2b6ea-b24d-444d-9ff5-ce953c623cd1&quot;
   }
 }</component>
   <component name="ProjectColorInfo">{
@@ -78,7 +83,7 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;ml.llm.LLMConfigurable&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;terminal&quot;,
     &quot;ts.external.directory.path&quot;: &quot;/home/aspl-81/.local/share/JetBrains/Toolbox/apps/pycharm/plugins/javascript-plugin/jsLanguageServicesImpl/external&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
@@ -89,7 +94,7 @@
     ]
   }
 }</component>
-  <component name="RunManager" selected="Django Server.Python-Project">
+  <component name="RunManager">
     <configuration name="Automated_Loan_Processing_-_Risk_Assessment" type="Python.DjangoServer" factoryName="Django server">
       <module name="Automated_Loan_Processing_-_Risk_Assessment" />
       <option name="ENV_FILES" value="" />
@@ -142,7 +147,6 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-f27c65a3e318-JavaScript-PY-251.23774.444" />
         <option value="bundled-python-sdk-890ed5b35930-d9c5bdb153f4-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-251.23774.444" />
       </set>
     </attachedChunks>
@@ -178,6 +182,7 @@
       <workItem from="1746780663852" duration="6396000" />
       <workItem from="1746791465661" duration="3397000" />
       <workItem from="1746796253242" duration="381000" />
+      <workItem from="1746860615531" duration="5585000" />
     </task>
     <task id="LOCAL-00001" summary="26/04/2025,6:33 PM">
       <option name="closed" value="true" />

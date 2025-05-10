@@ -10,6 +10,7 @@ from .serializers import (
 from creditscorings.utils import score_and_record
 from loanapplications.models import LoanApplication
 from django.db import transaction
+from asgiref.sync import async_to_sync
 import logging
 
 logger = logging.getLogger(__name__)
@@ -84,7 +85,7 @@ class RescoreLoanView(APIView):
                     loan.credit_scoring_record.delete()
 
                 # Re-run and save new score
-                credit_score = score_and_record(loan)
+                credit_score = async_to_sync(score_and_record)(loan)
 
                 return Response({
                     "detail": "Loan rescored successfully.",

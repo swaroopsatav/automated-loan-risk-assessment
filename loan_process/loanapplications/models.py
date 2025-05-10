@@ -3,6 +3,7 @@ from users.models import CustomUser
 from django.core.validators import MinValueValidator
 from django.core.exceptions import ValidationError
 from .utils.encryption_utils import EncryptedFileStorage
+from asgiref.sync import async_to_sync
 
 
 def loan_doc_upload_path(instance, filename):
@@ -96,7 +97,7 @@ class LoanApplication(models.Model):
         if is_new and self.status == 'pending':
             try:
                 from creditscorings.utils import score_and_record
-                score_and_record(self)
+                async_to_sync(score_and_record)(self)
                 # Update status to under_review after scoring
                 self.status = 'under_review'
                 super().save(update_fields=['status'])
